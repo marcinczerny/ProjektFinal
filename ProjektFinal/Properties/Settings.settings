@@ -1,7 +1,18 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ProjektFinal.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="charEndOfSerialFrame" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#</Value>
+    </Setting>
+    <Setting Name="charBeginOfTemperature" Type="System.String" Scope="User">
+      <Value Profile="(Default)">$</Value>
+    </Setting>
+    <Setting Name="charBeginOfPressure" Type="System.String" Scope="User">
+      <Value Profile="(Default)">%</Value>
+    </Setting>
+    <Setting Name="charBeginOfHumidity" Type="System.String" Scope="User">
+      <Value Profile="(Default)">^</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>
