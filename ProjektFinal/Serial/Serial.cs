@@ -22,8 +22,8 @@ namespace SerialConnect
     public class Serial
     {
         private SerialPort UART;
-        private long baudRate;
-        private string portName;
+        public long baudRate;
+        public string portName;
 
         public float temperature;
         public float pressure;
@@ -39,10 +39,24 @@ namespace SerialConnect
             get { return UART.IsOpen; }
         }
 
-        public void getSerial(SerialPort serial) {
+        public void setSerial(SerialPort serial) {
             this.UART = serial;
         }
 
+        public void CopySerialPort(SerialPort serialCopy)
+        {
+            serialCopy.BaudRate = UART.BaudRate;
+            serialCopy.PortName = UART.PortName;
+        }
+        public void CopySerialSettings(Serial copy)
+        {
+            copy.baudRate = this.baudRate;
+            copy.portName = this.portName;
+        }
+        public SerialPort getSerialPort()
+        {
+            return UART;
+        }
         public Serial()
         {
             decodedMessage = new messageDecoded();
@@ -57,9 +71,9 @@ namespace SerialConnect
                 {
                     UART.Open();
                 }
-                catch (IOException)
+                catch (IOException e)
                 {
-
+                    throw e;
                 }
             }
         }
@@ -129,17 +143,16 @@ namespace SerialConnect
         
             public bool DecodeMessage(ref string message)
         {
-
             message = leftInBuffer + message;
             
-            int endFrame = message.IndexOf('#');
+            int endFrame = message.IndexOf(ProjektFinal.Properties.Settings.Default.charEndOfSerialFrame);
             if(endFrame == -1)
             {
                 
                 return false; 
             }
 
-            int beginFrame = message.IndexOf('$');
+            int beginFrame = message.IndexOf(ProjektFinal.Properties.Settings.Default.charBeginOfTemperature);
             if(beginFrame == -1 || beginFrame > endFrame)
             {
                 message = message.Substring(endFrame+1);
@@ -148,9 +161,9 @@ namespace SerialConnect
             try
             {
                 string result = message.Substring(beginFrame, endFrame - beginFrame + 1);
-                string tempString = result.Substring(1, result.IndexOf('%') - 1);
-                string presString = result.Substring(result.IndexOf('%') + 1, result.IndexOf('^') - (result.IndexOf('%') + 1));
-                string humString = result.Substring(result.IndexOf('^') + 1, result.Length - 1 - (result.IndexOf('^') + 1));
+                string tempString = result.Substring(1, result.IndexOf(ProjektFinal.Properties.Settings.Default.charBeginOfPressure) - 1);
+                string presString = result.Substring(result.IndexOf(ProjektFinal.Properties.Settings.Default.charBeginOfPressure) + 1, result.IndexOf(ProjektFinal.Properties.Settings.Default.charBeginOfHumidity) - (result.IndexOf(ProjektFinal.Properties.Settings.Default.charBeginOfPressure) + 1));
+                string humString = result.Substring(result.IndexOf(ProjektFinal.Properties.Settings.Default.charBeginOfHumidity) + 1, result.Length - 1 - (result.IndexOf(ProjektFinal.Properties.Settings.Default.charBeginOfHumidity) + 1));
 
                 this.humidity = float.Parse(humString, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture);
                 this.pressure = float.Parse(presString, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.InvariantCulture);

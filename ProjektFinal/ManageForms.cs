@@ -9,11 +9,19 @@ namespace ProjektFinal
     public class ManageForms
     {
         private FormOptions form;
+        private Form1 mainForm;
         private bool formOpened;
-
-        public ManageForms()
+        
+        void formOptions_closed(object sender, EventArgs e)
         {
+            mainForm.SetSerialPort();
+        }
+        
+        public ManageForms(Form1 form1)
+        {
+            mainForm = form1;
             form = new FormOptions();
+            form.SendClick += new FormOptions.SendClickHandler(formOptions_closed);
         }
         public bool FormOpened()
         {
@@ -28,7 +36,8 @@ namespace ProjektFinal
         }
         public void ViewOptions(SerialConnect.Serial Context)
         {
-            form.serial = Context;
+            form.SerialContext = Context;
+            form.CopySerial();
             form.Show();
         }
     }

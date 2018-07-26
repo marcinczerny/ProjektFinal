@@ -13,9 +13,19 @@ namespace SerialConnect
 
         public static Serial CreateSerial(SerialPort serial) {
             Serial serialport = new Serial();
-            serialport.getSerial(serial);
+            serialport.setSerial(serial);
 
             return serialport;
+        }
+
+        public static Serial CopySerial(SerialPort serial, Serial original)
+        {
+            Serial copy = new Serial();
+            original.CopySerialPort(serial);
+            original.CopySerialSettings(copy);
+            copy.setSerial(serial);
+
+            return copy;
         }
     }
 }

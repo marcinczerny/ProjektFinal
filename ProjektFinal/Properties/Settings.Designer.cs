@@ -70,5 +70,29 @@ namespace ProjektFinal.Properties {
                 this["charBeginOfHumidity"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string stringPortName {
+            get {
+                return ((string)(this["stringPortName"]));
+            }
+            set {
+                this["stringPortName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("9600")]
+        public int intBaudRate {
+            get {
+                return ((int)(this["intBaudRate"]));
+            }
+            set {
+                this["intBaudRate"] = value;
+            }
+        }
     }
 }

@@ -13,7 +13,12 @@ namespace ProjektFinal
 {
     public partial class FormOptions : Form
     {
-        public Serial serial { get; set; }
+        public Serial SerialContext { get; set; }
+        public delegate void SendClickHandler(object sender, EventArgs e);
+        public event SendClickHandler SendClick;
+
+
+        private Serial serial;
         string leftInBuffer;
         string[] baundRate = { "300", "1200", "2400", "4800", "9600", "19200", "38400", "57600", "115200", "230400" };
         public FormOptions()
@@ -41,6 +46,9 @@ namespace ProjektFinal
         private void FormOptions_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
+            serial.CopySerialSettings(SerialContext);
+            serial.Close();
+            SendClick?.Invoke(sender, e);
             this.Hide();
         }
 
@@ -51,7 +59,11 @@ namespace ProjektFinal
             btnConnect.Enabled = true;
            
         }
-
+        
+        public void CopySerial()
+        {
+            serial = SerialConnect.SerialFactory.CopySerial(this.serialPort1, SerialContext);
+        }
         private void bntCancelSerialTest_Click(object sender, EventArgs e)
         {
             serial.Close();
@@ -73,7 +85,17 @@ namespace ProjektFinal
 
                 int baud;
                 Int32.TryParse(cmbBaudRate.SelectedItem.ToString(), out baud);
-                serial.Open(port, baud);
+                serial.portName = port;
+                serial.baudRate = baud;
+                try
+                {
+                    serial.Open(port, baud);
+                }catch(System.IO.IOException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+                
 
                 button1.Enabled = true;
                 button2.Enabled = true;
@@ -81,6 +103,7 @@ namespace ProjektFinal
                 button4.Enabled = true;
                 button5.Enabled = true;
                 btnConnect.Enabled = false;
+                bntCancelSerialTest.Enabled = true;
             }
             else
             {
@@ -91,6 +114,7 @@ namespace ProjektFinal
                 button3.Enabled = false;
                 button4.Enabled = false;
                 button5.Enabled = false;
+                bntCancelSerialTest.Enabled = false;
             }
         }
 
@@ -105,25 +129,23 @@ namespace ProjektFinal
             if (this.txbTemperatura.InvokeRequired)
             {
                 delegatForSerialportMsg d = new delegatForSerialportMsg(SetText); //dodanie delegata do kolejki
-                this.txbTemperatura.BeginInvoke(d, new object[] { dane });  //tutej
+                this.txbCisnienie.BeginInvoke(d, new object[] { dane });  //tutej
             }
             else
             {
-                //textBox1.Text += dane;
                 bool result;
-
 
                 dane = leftInBuffer + dane;
                 leftInBuffer = dane;
                 do
                 {
-                    result = serial.DecodeMessage(ref dane);
+                    result = SerialContext.DecodeMessage(ref dane);
 
                     if (result)
                     {
-                        txbTemperatura.Text = serial.temperature.ToString();
-                        txbCisnienie.Text = serial.pressure.ToString();
-                        txbWilgotnosc.Text = serial.humidity.ToString();
+                        txbTemperatura.Text = SerialContext.temperature.ToString();
+                        txbCisnienie.Text = SerialContext.pressure.ToString();
+                        txbWilgotnosc.Text = SerialContext.humidity.ToString();
                     }
 
                 } while (result == true);
@@ -132,7 +154,7 @@ namespace ProjektFinal
         }
         private void SendClient(string client)
         {
-            serial.Write(client + "#");
+            SerialContext.Write(client + "#");
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -161,38 +183,71 @@ namespace ProjektFinal
 
         private void txbEndOfFrame_TextChanged(object sender, EventArgs e)
         {
+            
+        }
+
+        private void txbBeginOfTemperature_TextChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void txbBeginOfPressure_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void txbBeginOfHumidity_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void serialPort1_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        {
+            string result = serial.ReadMessage();
+            SetText(result);
+        }
+
+        private void FormOptions_VisibleChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void btnSaveFrame_Click(object sender, EventArgs e)
+        {
             if (!String.Equals(txbEndOfFrame.Text, Properties.Settings.Default.charEndOfSerialFrame))
             {
                 Properties.Settings.Default.charEndOfSerialFrame = txbEndOfFrame.Text;
                 Properties.Settings.Default.Save();
             }
-        }
-
-        private void txbBeginOfTemperature_TextChanged(object sender, EventArgs e)
-        {
             if (!String.Equals(txbBeginOfTemperature.Text, Properties.Settings.Default.charBeginOfTemperature))
             {
                 Properties.Settings.Default.charBeginOfTemperature = txbBeginOfTemperature.Text;
                 Properties.Settings.Default.Save();
             }
-        }
-
-        private void txbBeginOfPressure_TextChanged(object sender, EventArgs e)
-        {
             if (!String.Equals(txbBeginOfPressure.Text, Properties.Settings.Default.charBeginOfPressure))
             {
                 Properties.Settings.Default.charBeginOfPressure = txbBeginOfPressure.Text;
                 Properties.Settings.Default.Save();
             }
-        }
-
-        private void txbBeginOfHumidity_TextChanged(object sender, EventArgs e)
-        {
             if (!String.Equals(txbBeginOfHumidity.Text, Properties.Settings.Default.charBeginOfHumidity))
             {
                 Properties.Settings.Default.charBeginOfHumidity = txbBeginOfHumidity.Text;
                 Properties.Settings.Default.Save();
             }
+        }
+
+        private void btnSaveSerialPort_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Properties.Settings.Default.intBaudRate = Int32.Parse(cmbBaudRate.Text);
+                Properties.Settings.Default.stringPortName = cmbPort.Text;
+                Properties.Settings.Default.Save();
+            }
+            catch(FormatException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
     }
 }

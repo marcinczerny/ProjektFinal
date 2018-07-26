@@ -71,6 +71,8 @@
             this.tabServer = new System.Windows.Forms.TabPage();
             this.tabDB = new System.Windows.Forms.TabPage();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.btnSaveFrame = new System.Windows.Forms.Button();
+            this.btnSaveSerialPort = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabSerial.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -117,6 +119,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnSaveSerialPort);
             this.groupBox1.Controls.Add(this.lblSerialInfo);
             this.groupBox1.Controls.Add(this.cmbBaudRate);
             this.groupBox1.Controls.Add(this.label7);
@@ -176,6 +179,7 @@
             // 
             this.groupBox2.Controls.Add(this.txbBeginOfHumidity);
             this.groupBox2.Controls.Add(this.txbBeginOfTemperature);
+            this.groupBox2.Controls.Add(this.btnSaveFrame);
             this.groupBox2.Controls.Add(this.txbBeginOfPressure);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label5);
@@ -501,6 +505,30 @@
             this.tabDB.Text = "Baza Danych";
             this.tabDB.UseVisualStyleBackColor = true;
             // 
+            // serialPort1
+            // 
+            this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
+            // 
+            // btnSaveFrame
+            // 
+            this.btnSaveFrame.Location = new System.Drawing.Point(9, 139);
+            this.btnSaveFrame.Name = "btnSaveFrame";
+            this.btnSaveFrame.Size = new System.Drawing.Size(104, 37);
+            this.btnSaveFrame.TabIndex = 3;
+            this.btnSaveFrame.Text = "Zapisz";
+            this.btnSaveFrame.UseVisualStyleBackColor = true;
+            this.btnSaveFrame.Click += new System.EventHandler(this.btnSaveFrame_Click);
+            // 
+            // btnSaveSerialPort
+            // 
+            this.btnSaveSerialPort.Location = new System.Drawing.Point(9, 136);
+            this.btnSaveSerialPort.Name = "btnSaveSerialPort";
+            this.btnSaveSerialPort.Size = new System.Drawing.Size(104, 37);
+            this.btnSaveSerialPort.TabIndex = 24;
+            this.btnSaveSerialPort.Text = "Zapisz";
+            this.btnSaveSerialPort.UseVisualStyleBackColor = true;
+            this.btnSaveSerialPort.Click += new System.EventHandler(this.btnSaveSerialPort_Click);
+            // 
             // FormOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -510,6 +538,7 @@
             this.Name = "FormOptions";
             this.Text = "FormOptions";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormOptions_FormClosing);
+            this.VisibleChanged += new System.EventHandler(this.FormOptions_VisibleChanged);
             this.tabControl1.ResumeLayout(false);
             this.tabSerial.ResumeLayout(false);
             this.tabSerial.PerformLayout();
@@ -568,5 +597,7 @@
         private System.Windows.Forms.Button btnStartSerialTest;
         private System.Windows.Forms.TextBox textBox1;
         private System.IO.Ports.SerialPort serialPort1;
+        private System.Windows.Forms.Button btnSaveFrame;
+        private System.Windows.Forms.Button btnSaveSerialPort;
     }
 }
