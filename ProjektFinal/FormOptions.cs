@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SerialConnect;
+using BazaDanychMySQL;
 
 namespace ProjektFinal
 {
@@ -21,25 +22,53 @@ namespace ProjektFinal
         private Serial serial;
         string leftInBuffer;
         string[] baundRate = { "300", "1200", "2400", "4800", "9600", "19200", "38400", "57600", "115200", "230400" };
+
+        DBConnect baza;
         public FormOptions()
         {
             InitializeComponent();
+            int index = -1;
+            int pom = 0;
             foreach (string baud in baundRate)
             {
                 cmbBaudRate.Items.Add(baud);
+                if(Int32.Parse(baud) == Properties.Settings.Default.intBaudRate)
+                {
+                    index = pom;
+                }
+                pom++;
+            }
+            if (index != -1)
+            {
+                cmbBaudRate.SelectedIndex = index;
+            }
+            else
+            {
+                cmbBaudRate.SelectedIndex = 4;
             }
 
-            cmbBaudRate.SelectedIndex = 4;
-
+            index = -1;
+            pom = 0;
             foreach (string port in Serial.GetPortNames())
             {
                 cmbPort.Items.Add(port);
+                if (String.Equals(port, Properties.Settings.Default.stringPortName))
+                {
+                    index = pom;
+                }
+                pom++;
+            }
+            if (index != -1)
+            {
+                cmbPort.SelectedIndex = index;
             }
 
             txbBeginOfHumidity.Text = Properties.Settings.Default.charBeginOfHumidity;
             txbBeginOfPressure.Text = Properties.Settings.Default.charBeginOfPressure;
             txbEndOfFrame.Text = Properties.Settings.Default.charEndOfSerialFrame;
             txbBeginOfTemperature.Text = Properties.Settings.Default.charBeginOfTemperature;
+
+            baza = new DBConnect();
         }
 
         
@@ -78,7 +107,7 @@ namespace ProjektFinal
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            if (serial.IsOpen == false)
+            if (serial.IsOpen == false && SerialContext.IsOpen == false)
             {
                 string port = cmbPort.SelectedItem.ToString();
                 port = port.Substring(0, port.IndexOf(' '));
@@ -104,17 +133,20 @@ namespace ProjektFinal
                 button5.Enabled = true;
                 btnConnect.Enabled = false;
                 bntCancelSerialTest.Enabled = true;
+                lblStatusSerial.Text = "Poprawnie połączono z portem szeregowym";
             }
             else
             {
                 serial.Close();
-                btnConnect.Enabled = true;
+                btnConnect.Enabled = false;
                 button1.Enabled = false;
                 button2.Enabled = false;
                 button3.Enabled = false;
                 button4.Enabled = false;
                 button5.Enabled = false;
                 bntCancelSerialTest.Enabled = false;
+                btnStartSerialTest.Enabled = true;
+                lblStatusSerial.Text = "Nie udało się połączyć z portem szeregowym";
             }
         }
 
@@ -136,7 +168,7 @@ namespace ProjektFinal
                 bool result;
 
                 dane = leftInBuffer + dane;
-                leftInBuffer = dane;
+                textBox1.Text += dane;
                 do
                 {
                     result = SerialContext.DecodeMessage(ref dane);
@@ -149,7 +181,8 @@ namespace ProjektFinal
                     }
 
                 } while (result == true);
-                textBox1.Text += dane;
+                leftInBuffer = dane;
+                
             }
         }
         private void SendClient(string client)
@@ -181,25 +214,6 @@ namespace ProjektFinal
             SendClient("5");
         }
 
-        private void txbEndOfFrame_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void txbBeginOfTemperature_TextChanged(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void txbBeginOfPressure_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void txbBeginOfHumidity_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
 
         private void serialPort1_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
@@ -207,9 +221,6 @@ namespace ProjektFinal
             SetText(result);
         }
 
-        private void FormOptions_VisibleChanged(object sender, EventArgs e)
-        {
-        }
 
         private void btnSaveFrame_Click(object sender, EventArgs e)
         {
@@ -248,6 +259,42 @@ namespace ProjektFinal
                 MessageBox.Show(ex.Message);
             }
             
+        }
+
+        public void ShowSerialStatus()
+        {
+            if (SerialContext.IsOpen)
+            {
+                lblStatusSerial.Text = "Jesteś połączony przez port szeregowy";
+                btnStartSerialTest.Enabled = false;
+                bntCancelSerialTest.Enabled = false;
+            }
+            else
+            {
+                lblStatusSerial.Text = "Nie jesteś połączony przez port szeregowy";
+                btnStartSerialTest.Enabled = true;
+                bntCancelSerialTest.Enabled = false;
+            }
+        }
+
+        private void btnCheckCount_Click(object sender, EventArgs e)
+        {
+            nmrStatCount.Value = (decimal)(baza.Count());
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            int delete = (int)nmrDeleteCount.Value;
+            if (delete < 1)
+            {
+                baza.Delete();
+            }
+            else
+            {
+                baza.Delete(delete);
+            }
+
+            btnCheckCount_Click(sender, e);
         }
     }
 }

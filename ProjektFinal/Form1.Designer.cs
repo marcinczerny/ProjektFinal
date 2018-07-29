@@ -35,22 +35,46 @@
             this.konfiguracjaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pomocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabKontrola = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblPortName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.lblPortBaud = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.btnConnectSerial = new System.Windows.Forms.Button();
             this.btnDisconnectSerial = new System.Windows.Forms.Button();
             this.panelOpenedSerial = new System.Windows.Forms.Panel();
             this.panelClosedSerial = new System.Windows.Forms.Panel();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.pictureDatabase = new System.Windows.Forms.PictureBox();
+            this.pictureServer = new System.Windows.Forms.PictureBox();
+            this.pictureUControler = new System.Windows.Forms.PictureBox();
+            this.pictureSerial = new System.Windows.Forms.PictureBox();
+            this.pictureBT = new System.Windows.Forms.PictureBox();
+            this.phoneClient1 = new ProjektFinal.PhoneClient();
+            this.phoneClient2 = new ProjektFinal.PhoneClient();
+            this.phoneClient3 = new ProjektFinal.PhoneClient();
+            this.phoneClient4 = new ProjektFinal.PhoneClient();
+            this.phoneClient5 = new ProjektFinal.PhoneClient();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.menuStrip1.SuspendLayout();
             this.tabKontrola.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureDatabase)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureServer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureUControler)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureSerial)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBT)).BeginInit();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -60,7 +84,7 @@
             this.opcjeToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1323, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -101,29 +125,22 @@
             this.tabKontrola.Location = new System.Drawing.Point(0, 24);
             this.tabKontrola.Name = "tabKontrola";
             this.tabKontrola.SelectedIndex = 0;
-            this.tabKontrola.Size = new System.Drawing.Size(800, 426);
+            this.tabKontrola.Size = new System.Drawing.Size(1323, 725);
             this.tabKontrola.TabIndex = 1;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(792, 400);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Obsługa";
-            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(792, 400);
+            this.tabPage2.Size = new System.Drawing.Size(1315, 575);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Wykresy";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // serialPort1
+            // 
+            this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
             // 
             // groupBox1
             // 
@@ -135,9 +152,9 @@
             this.groupBox1.Controls.Add(this.lblPortBaud);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.lblPortName);
-            this.groupBox1.Location = new System.Drawing.Point(8, 6);
+            this.groupBox1.Location = new System.Drawing.Point(3, 26);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(185, 165);
+            this.groupBox1.Size = new System.Drawing.Size(292, 165);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Połączenie z mikrokontrolerem";
@@ -162,16 +179,6 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Port:";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.Location = new System.Drawing.Point(6, 57);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Prędkość:";
-            // 
             // lblPortBaud
             // 
             this.lblPortBaud.AutoSize = true;
@@ -181,6 +188,16 @@
             this.lblPortBaud.Size = new System.Drawing.Size(35, 13);
             this.lblPortBaud.TabIndex = 2;
             this.lblPortBaud.Text = "label1";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label2.Location = new System.Drawing.Point(6, 57);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(55, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Prędkość:";
             // 
             // btnConnectSerial
             // 
@@ -216,23 +233,200 @@
             this.panelClosedSerial.Size = new System.Drawing.Size(75, 35);
             this.panelClosedSerial.TabIndex = 7;
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.groupBox4);
+            this.tabPage1.Controls.Add(this.groupBox3);
+            this.tabPage1.Controls.Add(this.groupBox2);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1315, 699);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Obsługa";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(6, 35);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown1.TabIndex = 2;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(6, 67);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(172, 118);
+            this.textBox1.TabIndex = 3;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.pictureUControler);
+            this.groupBox2.Controls.Add(this.pictureSerial);
+            this.groupBox2.Controls.Add(this.pictureBT);
+            this.groupBox2.Controls.Add(this.groupBox1);
+            this.groupBox2.Location = new System.Drawing.Point(0, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(302, 626);
+            this.groupBox2.TabIndex = 11;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Mikrokontroler";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.numericUpDown1);
+            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.pictureDatabase);
+            this.groupBox3.Location = new System.Drawing.Point(308, 3);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(296, 629);
+            this.groupBox3.TabIndex = 12;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Baza Danych";
+            // 
+            // pictureDatabase
+            // 
+            this.pictureDatabase.BackColor = System.Drawing.Color.DarkRed;
+            this.pictureDatabase.Image = global::ProjektFinal.Properties.Resources.mySQL;
+            this.pictureDatabase.Location = new System.Drawing.Point(18, 217);
+            this.pictureDatabase.Name = "pictureDatabase";
+            this.pictureDatabase.Size = new System.Drawing.Size(225, 225);
+            this.pictureDatabase.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureDatabase.TabIndex = 8;
+            this.pictureDatabase.TabStop = false;
+            // 
+            // pictureServer
+            // 
+            this.pictureServer.BackColor = System.Drawing.Color.DarkRed;
+            this.pictureServer.Image = global::ProjektFinal.Properties.Resources.server;
+            this.pictureServer.Location = new System.Drawing.Point(66, 150);
+            this.pictureServer.Name = "pictureServer";
+            this.pictureServer.Size = new System.Drawing.Size(256, 256);
+            this.pictureServer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureServer.TabIndex = 9;
+            this.pictureServer.TabStop = false;
+            // 
+            // pictureUControler
+            // 
+            this.pictureUControler.BackColor = System.Drawing.Color.DarkRed;
+            this.pictureUControler.Image = global::ProjektFinal.Properties.Resources.arduino;
+            this.pictureUControler.Location = new System.Drawing.Point(12, 267);
+            this.pictureUControler.Name = "pictureUControler";
+            this.pictureUControler.Size = new System.Drawing.Size(254, 181);
+            this.pictureUControler.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureUControler.TabIndex = 4;
+            this.pictureUControler.TabStop = false;
+            // 
+            // pictureSerial
+            // 
+            this.pictureSerial.BackColor = System.Drawing.Color.DarkRed;
+            this.pictureSerial.Image = global::ProjektFinal.Properties.Resources.serial;
+            this.pictureSerial.Location = new System.Drawing.Point(192, 191);
+            this.pictureSerial.Name = "pictureSerial";
+            this.pictureSerial.Size = new System.Drawing.Size(64, 64);
+            this.pictureSerial.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureSerial.TabIndex = 7;
+            this.pictureSerial.TabStop = false;
+            // 
+            // pictureBT
+            // 
+            this.pictureBT.BackColor = System.Drawing.Color.DarkRed;
+            this.pictureBT.Image = global::ProjektFinal.Properties.Resources.Bluetooth_icon;
+            this.pictureBT.Location = new System.Drawing.Point(23, 191);
+            this.pictureBT.Name = "pictureBT";
+            this.pictureBT.Size = new System.Drawing.Size(64, 64);
+            this.pictureBT.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBT.TabIndex = 6;
+            this.pictureBT.TabStop = false;
+            // 
+            // phoneClient1
+            // 
+            this.phoneClient1.Location = new System.Drawing.Point(6, 430);
+            this.phoneClient1.Name = "phoneClient1";
+            this.phoneClient1.Size = new System.Drawing.Size(157, 185);
+            this.phoneClient1.TabIndex = 13;
+            this.phoneClient1.Load += new System.EventHandler(this.phoneClient1_Load);
+            // 
+            // phoneClient2
+            // 
+            this.phoneClient2.Location = new System.Drawing.Point(188, 430);
+            this.phoneClient2.Name = "phoneClient2";
+            this.phoneClient2.Size = new System.Drawing.Size(157, 185);
+            this.phoneClient2.TabIndex = 14;
+            // 
+            // phoneClient3
+            // 
+            this.phoneClient3.Location = new System.Drawing.Point(375, 430);
+            this.phoneClient3.Name = "phoneClient3";
+            this.phoneClient3.Size = new System.Drawing.Size(157, 185);
+            this.phoneClient3.TabIndex = 15;
+            // 
+            // phoneClient4
+            // 
+            this.phoneClient4.Location = new System.Drawing.Point(375, 222);
+            this.phoneClient4.Name = "phoneClient4";
+            this.phoneClient4.Size = new System.Drawing.Size(157, 185);
+            this.phoneClient4.TabIndex = 16;
+            // 
+            // phoneClient5
+            // 
+            this.phoneClient5.Location = new System.Drawing.Point(375, 19);
+            this.phoneClient5.Name = "phoneClient5";
+            this.phoneClient5.Size = new System.Drawing.Size(157, 185);
+            this.phoneClient5.TabIndex = 17;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.phoneClient5);
+            this.groupBox4.Controls.Add(this.phoneClient4);
+            this.groupBox4.Controls.Add(this.phoneClient3);
+            this.groupBox4.Controls.Add(this.phoneClient2);
+            this.groupBox4.Controls.Add(this.phoneClient1);
+            this.groupBox4.Controls.Add(this.pictureServer);
+            this.groupBox4.Location = new System.Drawing.Point(622, 6);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(571, 626);
+            this.groupBox4.TabIndex = 18;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Serwer";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1323, 749);
             this.Controls.Add(this.tabKontrola);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Projekt KSP";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabKontrola.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureDatabase)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureServer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureUControler)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureSerial)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBT)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -246,9 +440,9 @@
         private System.Windows.Forms.ToolStripMenuItem konfiguracjaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pomocToolStripMenuItem;
         private System.Windows.Forms.TabControl tabKontrola;
-        private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.IO.Ports.SerialPort serialPort1;
+        private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Panel panelClosedSerial;
         private System.Windows.Forms.Panel panelOpenedSerial;
@@ -258,6 +452,21 @@
         private System.Windows.Forms.Label lblPortBaud;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblPortName;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.PictureBox pictureUControler;
+        private System.Windows.Forms.PictureBox pictureServer;
+        private System.Windows.Forms.PictureBox pictureDatabase;
+        private System.Windows.Forms.PictureBox pictureSerial;
+        private System.Windows.Forms.PictureBox pictureBT;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private PhoneClient phoneClient5;
+        private PhoneClient phoneClient4;
+        private PhoneClient phoneClient3;
+        private PhoneClient phoneClient2;
+        private PhoneClient phoneClient1;
+        private System.Windows.Forms.GroupBox groupBox4;
     }
 }
 

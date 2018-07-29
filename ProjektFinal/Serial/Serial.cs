@@ -148,7 +148,6 @@ namespace SerialConnect
             int endFrame = message.IndexOf(ProjektFinal.Properties.Settings.Default.charEndOfSerialFrame);
             if(endFrame == -1)
             {
-                
                 return false; 
             }
 

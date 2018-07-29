@@ -38,6 +38,7 @@ namespace ProjektFinal
         {
             form.SerialContext = Context;
             form.CopySerial();
+            form.ShowSerialStatus();
             form.Show();
         }
     }

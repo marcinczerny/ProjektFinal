@@ -1,4 +1,6 @@
-﻿namespace ProjektFinal
+﻿using System;
+
+namespace ProjektFinal
 {
     partial class FormOptions
     {
@@ -33,6 +35,7 @@
             this.tabSerial = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnSaveSerialPort = new System.Windows.Forms.Button();
             this.lblSerialInfo = new System.Windows.Forms.Label();
             this.cmbBaudRate = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -41,6 +44,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txbBeginOfHumidity = new System.Windows.Forms.MaskedTextBox();
             this.txbBeginOfTemperature = new System.Windows.Forms.MaskedTextBox();
+            this.btnSaveFrame = new System.Windows.Forms.Button();
             this.txbBeginOfPressure = new System.Windows.Forms.MaskedTextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -70,15 +74,26 @@
             this.btnStartSerialTest = new System.Windows.Forms.Button();
             this.tabServer = new System.Windows.Forms.TabPage();
             this.tabDB = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.btnCheckCount = new System.Windows.Forms.Button();
+            this.label14 = new System.Windows.Forms.Label();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.nmrDeleteCount = new System.Windows.Forms.NumericUpDown();
+            this.nmrStatCount = new System.Windows.Forms.NumericUpDown();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
-            this.btnSaveFrame = new System.Windows.Forms.Button();
-            this.btnSaveSerialPort = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabSerial.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.tabDB.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nmrDeleteCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmrStatCount)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -131,6 +146,16 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Konfiguracja Portu";
+            // 
+            // btnSaveSerialPort
+            // 
+            this.btnSaveSerialPort.Location = new System.Drawing.Point(9, 136);
+            this.btnSaveSerialPort.Name = "btnSaveSerialPort";
+            this.btnSaveSerialPort.Size = new System.Drawing.Size(104, 37);
+            this.btnSaveSerialPort.TabIndex = 24;
+            this.btnSaveSerialPort.Text = "Zapisz";
+            this.btnSaveSerialPort.UseVisualStyleBackColor = true;
+            this.btnSaveSerialPort.Click += new System.EventHandler(this.btnSaveSerialPort_Click);
             // 
             // lblSerialInfo
             // 
@@ -213,6 +238,16 @@
             this.txbBeginOfTemperature.Size = new System.Drawing.Size(104, 20);
             this.txbBeginOfTemperature.TabIndex = 29;
             this.txbBeginOfTemperature.TextChanged += new System.EventHandler(this.txbBeginOfTemperature_TextChanged);
+            // 
+            // btnSaveFrame
+            // 
+            this.btnSaveFrame.Location = new System.Drawing.Point(9, 139);
+            this.btnSaveFrame.Name = "btnSaveFrame";
+            this.btnSaveFrame.Size = new System.Drawing.Size(104, 37);
+            this.btnSaveFrame.TabIndex = 3;
+            this.btnSaveFrame.Text = "Zapisz";
+            this.btnSaveFrame.UseVisualStyleBackColor = true;
+            this.btnSaveFrame.Click += new System.EventHandler(this.btnSaveFrame_Click);
             // 
             // txbBeginOfPressure
             // 
@@ -498,6 +533,7 @@
             // 
             // tabDB
             // 
+            this.tabDB.Controls.Add(this.groupBox4);
             this.tabDB.Location = new System.Drawing.Point(4, 22);
             this.tabDB.Name = "tabDB";
             this.tabDB.Size = new System.Drawing.Size(792, 424);
@@ -505,29 +541,96 @@
             this.tabDB.Text = "Baza Danych";
             this.tabDB.UseVisualStyleBackColor = true;
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.button6);
+            this.groupBox4.Controls.Add(this.button7);
+            this.groupBox4.Controls.Add(this.label13);
+            this.groupBox4.Controls.Add(this.btnCheckCount);
+            this.groupBox4.Controls.Add(this.label14);
+            this.groupBox4.Controls.Add(this.btnDelete);
+            this.groupBox4.Controls.Add(this.nmrDeleteCount);
+            this.groupBox4.Controls.Add(this.nmrStatCount);
+            this.groupBox4.Location = new System.Drawing.Point(8, 141);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(751, 233);
+            this.groupBox4.TabIndex = 23;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Obsługa";
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(475, 73);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(120, 33);
+            this.button6.TabIndex = 20;
+            this.button6.Text = "Przywróć";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(335, 73);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(120, 33);
+            this.button7.TabIndex = 19;
+            this.button7.Text = "Backup";
+            this.button7.UseVisualStyleBackColor = true;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(169, 31);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(148, 13);
+            this.label13.TabIndex = 18;
+            this.label13.Text = "Liczba rekordów do usunięcia";
+            // 
+            // btnCheckCount
+            // 
+            this.btnCheckCount.Location = new System.Drawing.Point(15, 73);
+            this.btnCheckCount.Name = "btnCheckCount";
+            this.btnCheckCount.Size = new System.Drawing.Size(120, 33);
+            this.btnCheckCount.TabIndex = 17;
+            this.btnCheckCount.Text = "Oblicz";
+            this.btnCheckCount.UseVisualStyleBackColor = true;
+            this.btnCheckCount.Click += new System.EventHandler(this.btnCheckCount_Click);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(12, 31);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(76, 13);
+            this.label14.TabIndex = 16;
+            this.label14.Text = "Ilość rekordów";
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(172, 75);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(120, 33);
+            this.btnDelete.TabIndex = 2;
+            this.btnDelete.Text = "USUŃ";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // nmrDeleteCount
+            // 
+            this.nmrDeleteCount.Location = new System.Drawing.Point(172, 47);
+            this.nmrDeleteCount.Name = "nmrDeleteCount";
+            this.nmrDeleteCount.Size = new System.Drawing.Size(120, 20);
+            this.nmrDeleteCount.TabIndex = 1;
+            // 
+            // nmrStatCount
+            // 
+            this.nmrStatCount.Location = new System.Drawing.Point(15, 47);
+            this.nmrStatCount.Name = "nmrStatCount";
+            this.nmrStatCount.Size = new System.Drawing.Size(120, 20);
+            this.nmrStatCount.TabIndex = 0;
+            // 
             // serialPort1
             // 
             this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
-            // 
-            // btnSaveFrame
-            // 
-            this.btnSaveFrame.Location = new System.Drawing.Point(9, 139);
-            this.btnSaveFrame.Name = "btnSaveFrame";
-            this.btnSaveFrame.Size = new System.Drawing.Size(104, 37);
-            this.btnSaveFrame.TabIndex = 3;
-            this.btnSaveFrame.Text = "Zapisz";
-            this.btnSaveFrame.UseVisualStyleBackColor = true;
-            this.btnSaveFrame.Click += new System.EventHandler(this.btnSaveFrame_Click);
-            // 
-            // btnSaveSerialPort
-            // 
-            this.btnSaveSerialPort.Location = new System.Drawing.Point(9, 136);
-            this.btnSaveSerialPort.Name = "btnSaveSerialPort";
-            this.btnSaveSerialPort.Size = new System.Drawing.Size(104, 37);
-            this.btnSaveSerialPort.TabIndex = 24;
-            this.btnSaveSerialPort.Text = "Zapisz";
-            this.btnSaveSerialPort.UseVisualStyleBackColor = true;
-            this.btnSaveSerialPort.Click += new System.EventHandler(this.btnSaveSerialPort_Click);
             // 
             // FormOptions
             // 
@@ -549,8 +652,33 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.tabDB.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nmrDeleteCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmrStatCount)).EndInit();
             this.ResumeLayout(false);
 
+        }
+
+        private void FormOptions_VisibleChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void txbEndOfFrame_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void txbBeginOfPressure_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void txbBeginOfTemperature_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void txbBeginOfHumidity_TextChanged(object sender, EventArgs e)
+        {
         }
 
         #endregion
@@ -599,5 +727,14 @@
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Button btnSaveFrame;
         private System.Windows.Forms.Button btnSaveSerialPort;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button btnCheckCount;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.NumericUpDown nmrDeleteCount;
+        private System.Windows.Forms.NumericUpDown nmrStatCount;
     }
 }
