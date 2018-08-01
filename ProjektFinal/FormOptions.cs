@@ -24,6 +24,7 @@ namespace ProjektFinal
         string[] baundRate = { "300", "1200", "2400", "4800", "9600", "19200", "38400", "57600", "115200", "230400" };
 
         DBConnect baza;
+        bool bazaValidated;
         public FormOptions()
         {
             InitializeComponent();
@@ -68,7 +69,13 @@ namespace ProjektFinal
             txbEndOfFrame.Text = Properties.Settings.Default.charEndOfSerialFrame;
             txbBeginOfTemperature.Text = Properties.Settings.Default.charBeginOfTemperature;
 
-            baza = new DBConnect();
+            baza = new DBConnect(Properties.Settings.Default.stringServer, Properties.Settings.Default.stringUID, Properties.Settings.Default.stringDBPassword, Properties.Settings.Default.stringDatabase);
+            maskedPassword.Text = Properties.Settings.Default.stringDBPassword;
+            txbServer.Text = Properties.Settings.Default.stringServer;
+            txbUID.Text = Properties.Settings.Default.stringUID;
+            txbDatabase.Text = Properties.Settings.Default.stringDatabase;
+
+            bazaValidated = false;
         }
 
         
@@ -166,9 +173,8 @@ namespace ProjektFinal
             else
             {
                 bool result;
-
-                dane = leftInBuffer + dane;
                 textBox1.Text += dane;
+                dane = leftInBuffer + dane;
                 do
                 {
                     result = SerialContext.DecodeMessage(ref dane);
@@ -187,7 +193,7 @@ namespace ProjektFinal
         }
         private void SendClient(string client)
         {
-            SerialContext.Write(client + "#");
+            serial.Write(client + "#");
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -295,6 +301,93 @@ namespace ProjektFinal
             }
 
             btnCheckCount_Click(sender, e);
+        }
+
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label15_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label17_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnValidateDB_Click(object sender, EventArgs e)
+        {
+            backgroundValidateDB.RunWorkerAsync();
+        }
+
+        private void txbServer_TextChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.stringServer = txbServer.Text;
+            Properties.Settings.Default.Save();
+            baza.Server = Properties.Settings.Default.stringServer;
+            baza.refreshConnection();
+        }
+
+        private void txbServer_Validated(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.stringServer = txbServer.Text;
+            Properties.Settings.Default.Save();
+            baza.Server = Properties.Settings.Default.stringServer;
+            baza.refreshConnection();
+        }
+
+        private void txbUID_Validated(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.stringUID = txbUID.Text;
+            Properties.Settings.Default.Save();
+            baza.Uid = Properties.Settings.Default.stringUID;
+            baza.refreshConnection();
+        }
+
+        private void maskedPassword_Validated(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.stringDBPassword = maskedPassword.Text;
+            Properties.Settings.Default.Save();
+            baza.Password = Properties.Settings.Default.stringDBPassword;
+            baza.refreshConnection();
+        }
+
+        private void txbDatabase_TextChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.stringDatabase = txbDatabase.Text;
+            Properties.Settings.Default.Save();
+            baza.Database = Properties.Settings.Default.stringDatabase;
+            baza.refreshConnection();
+        }
+
+        private void backgroundValidateDB_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if (baza.ValidateDB() == true)
+            {
+                bazaValidated = true;
+            }
+            else
+            {
+                bazaValidated = false;
+            }
+        }
+
+        private void backgroundValidateDB_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (bazaValidated == true)
+            {
+                MessageBox.Show("Walidacja przebiegła poprawnie");
+
+            }
+            else
+            {
+                MessageBox.Show("Walidacja zakończyła się niepowodzeniem!!!");
+            }
+            
+            Cursor.Current = Cursors.Default;
         }
     }
 }

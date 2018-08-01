@@ -15,6 +15,7 @@ namespace ProjektFinal
         void formOptions_closed(object sender, EventArgs e)
         {
             mainForm.SetSerialPort();
+            mainForm.ValidateApp();
         }
         
         public ManageForms(Form1 form1)

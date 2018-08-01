@@ -20,5 +20,17 @@
     <Setting Name="intBaudRate" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">9600</Value>
     </Setting>
+    <Setting Name="stringServer" Type="System.String" Scope="User">
+      <Value Profile="(Default)">localhost</Value>
+    </Setting>
+    <Setting Name="stringUID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Marcin</Value>
+    </Setting>
+    <Setting Name="stringDBPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Andaluzja13</Value>
+    </Setting>
+    <Setting Name="stringDatabase" Type="System.String" Scope="User">
+      <Value Profile="(Default)">weather</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

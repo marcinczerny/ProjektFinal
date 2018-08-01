@@ -39,6 +39,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -129,6 +130,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\android.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database-mysql.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\diodeOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\diodeOn.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -20,6 +20,10 @@ namespace ProjektFinal
         DBConnect baza;
 
         object serialMutex;
+
+        timespan[] timespans = { timespan.day, timespan.hour, timespan.minute, timespan.sample };
+
+        bool appValidated;
         public Form1()
         {
             InitializeComponent();
@@ -27,12 +31,21 @@ namespace ProjektFinal
             mng = new ManageForms(this);
             serial = SerialFactory.CreateSerial(this.serialPort1);
             SetSerialPort();
-            baza = new DBConnect();
+            baza = new DBConnect(Properties.Settings.Default.stringServer,Properties.Settings.Default.stringUID,Properties.Settings.Default.stringDBPassword,Properties.Settings.Default.stringDatabase);
 
             btnDisconnectSerial.Enabled = false;
             panelClosedSerial.BackColor = Color.Red;
 
             serialMutex = new object();
+
+            foreach (timespan tspan in timespans)
+            {
+                cmbAggregation.Items.Add(tspan);
+            }
+            cmbAggregation.SelectedIndex = 1;
+
+            appValidated = false;
+            ValidateApp();
         }
 
         private void konfiguracjaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -72,12 +85,16 @@ namespace ProjektFinal
             {
                 return;
             }
-
+            backgroundSerial.RunWorkerAsync();
             string port = Properties.Settings.Default.stringPortName;
             port = port.Substring(0, port.IndexOf(' '));
             try
             {
                 serial.Open(port, Properties.Settings.Default.intBaudRate);
+
+                pictureSerial.BackColor = Color.Green;
+                pictureBT.BackColor = Color.Green;
+                pictureUControler.BackColor = Color.Green;
             }
             catch(System.IO.IOException ex)
             {
@@ -103,31 +120,6 @@ namespace ProjektFinal
             CloseSerialConnection();
         }
 
-        /// <summary>
-        /// Delegat do zapewnienia bezpieczeństwa wątków przy odbieraniu wiadomości
-        /// </summary>
-        /// <param name="data"></param>
-        delegate void delegatForSerialportMsg(string data);
-        private void SetText(string dane)
-        {
-            bool sendingSuccesfull;
-            if (this.textBox1.InvokeRequired)
-            {
-                delegatForSerialportMsg d = new delegatForSerialportMsg(SetText); //dodanie delegata do kolejki
-                this.textBox1.BeginInvoke(d, new object[] { dane });  //tutej
-            }
-            else
-            {
-                try
-                {
-                    textBox1.Text += dane; 
-                }catch(ArgumentOutOfRangeException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-        }
-
         delegate void delegatForDatabase();
         private void SetInsertedToDBMessagesNumber()
         {
@@ -141,6 +133,12 @@ namespace ProjektFinal
             {
                 try
                 {
+                    lock (serialMutex)
+                    {
+                        numericPressure.Value = Convert.ToDecimal(serial.pressure);
+                        numericTemperature.Value = Convert.ToDecimal(serial.temperature);
+                        numericHumidity.Value = Convert.ToDecimal(serial.humidity);
+                    }
                     numericUpDown1.Value = numericUpDown1.Value + 1;
                 }
                 catch (ArgumentOutOfRangeException ex)
@@ -158,7 +156,6 @@ namespace ProjektFinal
 
             bool result;
             string dane = serial.ReadMessage();
-            SetText(dane);
             lock (serialMutex)
             {
                 dane = leftInBuffer + dane;
@@ -187,6 +184,103 @@ namespace ProjektFinal
         private void phoneClient1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        public void ValidateApp()
+        {
+            backgroundValidate.RunWorkerAsync();            
+        }
+
+        private void btnDraw_Click(object sender, EventArgs e)
+        {
+            var times = cmbAggregation.SelectedItem;
+
+            timespan ts = (timespan)Enum.Parse(typeof(timespan), times.ToString());
+
+            string query = baza.CreateSelectQuery(ts, (int)nmrUnits.Value, false);
+
+            List<string>[] result = new List<string>[4];
+            result = baza.Select(query);
+
+
+            chart1.Series[0].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            chart1.Series[1].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            chart1.Series[2].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            chart1.ChartAreas[0].AxisX.LabelStyle.Format = "g";
+            chart1.ChartAreas[1].AxisX.LabelStyle.Format = "g";
+            chart1.ChartAreas[2].AxisX.LabelStyle.Format = "g";
+
+
+            DrawChart(result[0], result[1], result[2], result[3]);
+        }
+
+        private void tabPage2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbAggregation_SelectedIndexChanged(object sender, EventArgs e)
+        {
+               
+        }
+
+        private void DrawChart(List<string> timestamp, List<string> temperature, List<string> pressure, List<string> humidity)
+        {
+
+            chart1.Series[0].Points.Clear();
+            chart1.Series[1].Points.Clear();
+            chart1.Series[2].Points.Clear();
+            for (int i = 0; i < timestamp.Count; i++)
+            {
+                try
+                {
+                    DateTime timeOnX = DateTime.Parse(timestamp[i]);
+                    float temperatureOnY = Convert.ToSingle(temperature[i]);
+                    float pressureOnY = Convert.ToSingle(pressure[i]);
+                    float humidityOnY = Convert.ToSingle(humidity[i]);
+
+                    chart1.Series[0].Points.AddXY(timeOnX, temperatureOnY);
+                    chart1.Series[1].Points.AddXY(timeOnX, pressureOnY);
+                    chart1.Series[2].Points.AddXY(timeOnX, humidityOnY);
+                }
+                catch (ArgumentNullException ex)
+                {
+                    MessageBox.Show("Brak argumentu " + ex);
+                }
+                catch (FormatException ex)
+                {
+                    MessageBox.Show("Błąd formatu: " + ex);
+                }
+                catch (OverflowException ex)
+                {
+                    MessageBox.Show("Błąd przepełnienia " + ex);
+                }
+            }
+
+        }
+
+        private void backgroundValidate_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if(baza.ValidateDB() == true)
+            {
+                appValidated = true;
+            }
+            else
+            {
+                appValidated = false;
+            }
+        }
+
+        private void backgroundValidate_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (appValidated == true)
+            {
+                pictureDatabase.BackColor = Color.Green;
+            }
+            else
+            {
+                pictureDatabase.BackColor = Color.Red;
+            }
         }
     }
 }

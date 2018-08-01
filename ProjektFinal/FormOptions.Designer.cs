@@ -74,6 +74,16 @@ namespace ProjektFinal
             this.btnStartSerialTest = new System.Windows.Forms.Button();
             this.tabServer = new System.Windows.Forms.TabPage();
             this.tabDB = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btnValidateDB = new System.Windows.Forms.Button();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txbDatabase = new System.Windows.Forms.TextBox();
+            this.txbUID = new System.Windows.Forms.TextBox();
+            this.txbServer = new System.Windows.Forms.TextBox();
+            this.maskedPassword = new System.Windows.Forms.MaskedTextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
@@ -84,6 +94,7 @@ namespace ProjektFinal
             this.nmrDeleteCount = new System.Windows.Forms.NumericUpDown();
             this.nmrStatCount = new System.Windows.Forms.NumericUpDown();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.backgroundValidateDB = new System.ComponentModel.BackgroundWorker();
             this.tabControl1.SuspendLayout();
             this.tabSerial.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -91,6 +102,7 @@ namespace ProjektFinal
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tabDB.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmrDeleteCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmrStatCount)).BeginInit();
@@ -341,6 +353,7 @@ namespace ProjektFinal
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Test połączenia";
+            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
             // textBox1
             // 
@@ -533,6 +546,7 @@ namespace ProjektFinal
             // 
             // tabDB
             // 
+            this.tabDB.Controls.Add(this.groupBox5);
             this.tabDB.Controls.Add(this.groupBox4);
             this.tabDB.Location = new System.Drawing.Point(4, 22);
             this.tabDB.Name = "tabDB";
@@ -540,6 +554,106 @@ namespace ProjektFinal
             this.tabDB.TabIndex = 2;
             this.tabDB.Text = "Baza Danych";
             this.tabDB.UseVisualStyleBackColor = true;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.btnValidateDB);
+            this.groupBox5.Controls.Add(this.label18);
+            this.groupBox5.Controls.Add(this.label17);
+            this.groupBox5.Controls.Add(this.label16);
+            this.groupBox5.Controls.Add(this.label15);
+            this.groupBox5.Controls.Add(this.txbDatabase);
+            this.groupBox5.Controls.Add(this.txbUID);
+            this.groupBox5.Controls.Add(this.txbServer);
+            this.groupBox5.Controls.Add(this.maskedPassword);
+            this.groupBox5.Location = new System.Drawing.Point(8, 13);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(751, 122);
+            this.groupBox5.TabIndex = 24;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Połączenie";
+            // 
+            // btnValidateDB
+            // 
+            this.btnValidateDB.Location = new System.Drawing.Point(670, 84);
+            this.btnValidateDB.Name = "btnValidateDB";
+            this.btnValidateDB.Size = new System.Drawing.Size(75, 23);
+            this.btnValidateDB.TabIndex = 8;
+            this.btnValidateDB.Text = "Waliduj";
+            this.btnValidateDB.UseVisualStyleBackColor = true;
+            this.btnValidateDB.Click += new System.EventHandler(this.btnValidateDB_Click);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(461, 25);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(34, 13);
+            this.label18.TabIndex = 7;
+            this.label18.Text = "Baza:";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(157, 25);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(36, 13);
+            this.label17.TabIndex = 6;
+            this.label17.Text = "Login:";
+            this.label17.Click += new System.EventHandler(this.label17_Click);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(312, 25);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(39, 13);
+            this.label16.TabIndex = 5;
+            this.label16.Text = "Hasło:";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(15, 25);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(81, 13);
+            this.label15.TabIndex = 4;
+            this.label15.Text = "Serwer MySQL:";
+            this.label15.Click += new System.EventHandler(this.label15_Click);
+            // 
+            // txbDatabase
+            // 
+            this.txbDatabase.Location = new System.Drawing.Point(464, 44);
+            this.txbDatabase.Name = "txbDatabase";
+            this.txbDatabase.Size = new System.Drawing.Size(120, 20);
+            this.txbDatabase.TabIndex = 3;
+            this.txbDatabase.TextChanged += new System.EventHandler(this.txbDatabase_TextChanged);
+            // 
+            // txbUID
+            // 
+            this.txbUID.Location = new System.Drawing.Point(160, 44);
+            this.txbUID.Name = "txbUID";
+            this.txbUID.Size = new System.Drawing.Size(120, 20);
+            this.txbUID.TabIndex = 2;
+            this.txbUID.Validated += new System.EventHandler(this.txbUID_Validated);
+            // 
+            // txbServer
+            // 
+            this.txbServer.Location = new System.Drawing.Point(15, 44);
+            this.txbServer.Name = "txbServer";
+            this.txbServer.Size = new System.Drawing.Size(120, 20);
+            this.txbServer.TabIndex = 1;
+            this.txbServer.TextChanged += new System.EventHandler(this.txbServer_TextChanged);
+            this.txbServer.Validated += new System.EventHandler(this.txbServer_Validated);
+            // 
+            // maskedPassword
+            // 
+            this.maskedPassword.Location = new System.Drawing.Point(315, 44);
+            this.maskedPassword.Name = "maskedPassword";
+            this.maskedPassword.PasswordChar = '*';
+            this.maskedPassword.Size = new System.Drawing.Size(120, 20);
+            this.maskedPassword.TabIndex = 0;
+            this.maskedPassword.Validated += new System.EventHandler(this.maskedPassword_Validated);
             // 
             // groupBox4
             // 
@@ -632,6 +746,11 @@ namespace ProjektFinal
             // 
             this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
             // 
+            // backgroundValidateDB
+            // 
+            this.backgroundValidateDB.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundValidateDB_DoWork);
+            this.backgroundValidateDB.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundValidateDB_RunWorkerCompleted);
+            // 
             // FormOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -653,6 +772,8 @@ namespace ProjektFinal
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.tabDB.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmrDeleteCount)).EndInit();
@@ -736,5 +857,16 @@ namespace ProjektFinal
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.NumericUpDown nmrDeleteCount;
         private System.Windows.Forms.NumericUpDown nmrStatCount;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.MaskedTextBox maskedPassword;
+        private System.Windows.Forms.TextBox txbDatabase;
+        private System.Windows.Forms.TextBox txbUID;
+        private System.Windows.Forms.TextBox txbServer;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Button btnValidateDB;
+        private System.ComponentModel.BackgroundWorker backgroundValidateDB;
     }
 }

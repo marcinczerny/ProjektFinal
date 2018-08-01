@@ -103,6 +103,36 @@ namespace ProjektFinal.Properties {
         /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap database_mysql {
+            get {
+                object obj = ResourceManager.GetObject("database_mysql", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap diodeOff {
+            get {
+                object obj = ResourceManager.GetObject("diodeOff", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap diodeOn {
+            get {
+                object obj = ResourceManager.GetObject("diodeOn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap mySQL {
             get {
                 object obj = ResourceManager.GetObject("mySQL", resourceCulture);

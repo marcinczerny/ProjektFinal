@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Forms;
+using System.Globalization;
 //MySQL biblioteka
 using MySql.Data.MySqlClient;
 
@@ -19,33 +20,41 @@ namespace BazaDanychMySQL
         //private MySqlConnection cn;
         private string connectionString;
 
-        public DBConnect()
+        public string Database { get => database; set => database = value; }
+        public string Server { get => server; set => server = value; }
+        public string Uid { get => uid; set => uid = value; }
+        public string Password {  set => password = value; }
+
+        NumberFormatInfo nfi = new NumberFormatInfo();
+
+        public DBConnect(string server, string uid, string password, string database)
         {
-            Initialize();
+            Initialize(server,uid,password,database);
+            nfi.NumberDecimalSeparator = ".";
         }
 
-        private void Initialize()
+        private void Initialize(string server, string uid, string password, string database)
         {
-            server = "localhost";
-            uid = "Marcin";
-            password = "Andaluzja13";
-            database = "weather";
-
-            string connection="";
-
-            try
-            {
-                connectionString = CreateConnectionString(server, database, uid, password);
-                //cn = new MySqlConnection(connection);
-            }
-            catch(ArgumentException ex)
-            {
-                //do implementacji
-            }
-
+            this.Server = server;
+            this.Uid = uid;
+            this.Password = password;
+            this.Database = database;
+            refreshConnection();
            
         }
 
+        public void refreshConnection()
+        {
+            try
+            {
+                connectionString = CreateConnectionString(Server, Database, Uid, password);
+                //cn = new MySqlConnection(connection);
+            }
+            catch (ArgumentException ex)
+            {
+                //do implementacji
+            }
+        }
         private string CreateConnectionString(params string[] cnList) {
             string result="";
 
@@ -62,7 +71,21 @@ namespace BazaDanychMySQL
 
             return result;
         }
-
+        public bool ValidateDB()
+        {
+            refreshConnection();
+            using (MySqlConnection cn = new MySqlConnection(connectionString))
+            {
+                if (this.OpenConnection(cn) == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }         
+        }
 
         //open connection to database
         private bool OpenConnection(MySqlConnection cn)
@@ -82,8 +105,8 @@ namespace BazaDanychMySQL
                 //1045: Invalid user name and/or password.
                 switch (ex.Number)
                 {
-                    case 0:
-                       // MessageBox.Show("Cannot connect to server.  Contact administrator");
+                    case 0:                        
+                       //MessageBox.Show("Cannot connect to server.  Contact administrator");
                         break;
 
                     case 1045:
@@ -113,7 +136,7 @@ namespace BazaDanychMySQL
         public string CreateInsertQuery(float temp, float pres, float hum)
         {
             return "INSERT INTO tblweathersample (Timestamp, Temperature, Pressure, Humidity) " +
-                "VALUES ( NOW(), " + temp.ToString() + ", " + pres.ToString() + ", " + hum.ToString() + ");";
+                "VALUES ( NOW(), " + temp.ToString(nfi) + ", " + pres.ToString(nfi) + ", " + hum.ToString(nfi) + ");";
         }
         //Insert statement
         public void Insert(string query)
@@ -131,6 +154,7 @@ namespace BazaDanychMySQL
                     }
                     catch (Exception e)
                     {
+                        MessageBox.Show(query);
                     }
                     //Execute command
 
@@ -292,7 +316,7 @@ namespace BazaDanychMySQL
                     {
 
                         //list[0].Add(dataReader["id"] + "");
-                        list[0].Add(dataReader["Timestamp"] + "");
+                        list[0].Add(dataReader[0] + "");
                         list[1].Add(dataReader["Temperature"] + "");
                         list[2].Add(dataReader["Pressure"] + "");
                         list[3].Add(dataReader["Humidity"] + "");

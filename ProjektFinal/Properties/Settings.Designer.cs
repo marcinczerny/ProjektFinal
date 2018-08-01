@@ -94,5 +94,53 @@ namespace ProjektFinal.Properties {
                 this["intBaudRate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("localhost")]
+        public string stringServer {
+            get {
+                return ((string)(this["stringServer"]));
+            }
+            set {
+                this["stringServer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Marcin")]
+        public string stringUID {
+            get {
+                return ((string)(this["stringUID"]));
+            }
+            set {
+                this["stringUID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Andaluzja13")]
+        public string stringDBPassword {
+            get {
+                return ((string)(this["stringDBPassword"]));
+            }
+            set {
+                this["stringDBPassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("weather")]
+        public string stringDatabase {
+            get {
+                return ((string)(this["stringDatabase"]));
+            }
+            set {
+                this["stringDatabase"] = value;
+            }
+        }
     }
 }

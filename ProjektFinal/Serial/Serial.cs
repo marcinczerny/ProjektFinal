@@ -39,6 +39,12 @@ namespace SerialConnect
             get { return UART.IsOpen; }
         }
 
+        private string errMessage;
+        public string ErrMessage
+        {
+            get => errMessage;
+            set => errMessage = value;
+        }
         public void setSerial(SerialPort serial) {
             this.UART = serial;
         }
