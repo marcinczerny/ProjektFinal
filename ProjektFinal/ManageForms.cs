@@ -11,17 +11,22 @@ namespace ProjektFinal
         private FormOptions form;
         private Form1 mainForm;
         private bool formOpened;
-        
+
+        public delegate void SendClickHandler(object sender, EventArgs e);
+        public event SendClickHandler SendClick;
+
         void formOptions_closed(object sender, EventArgs e)
         {
             mainForm.SetSerialPort();
             mainForm.ValidateApp();
+            //SendClick?.Invoke(sender, e);
         }
         
         public ManageForms(Form1 form1)
         {
             mainForm = form1;
             form = new FormOptions();
+            
             form.SendClick += new FormOptions.SendClickHandler(formOptions_closed);
         }
         public bool FormOpened()

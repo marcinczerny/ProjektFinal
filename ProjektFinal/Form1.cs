@@ -12,6 +12,11 @@ using BazaDanychMySQL;
 
 namespace ProjektFinal
 {
+    public struct SaverToDB
+    {
+        public bool saveCompletedWithoutError;
+        public int tryToSaveCount;
+    }
     public partial class Form1 : Form
     {
         ManageForms mng;
@@ -20,15 +25,22 @@ namespace ProjektFinal
         DBConnect baza;
 
         object serialMutex;
+        object dbCollectionMutex;
 
+        List<string> sqlToSaveCollection;
         timespan[] timespans = { timespan.day, timespan.hour, timespan.minute, timespan.sample };
 
         bool appValidated;
+        SaverToDB saverTo;
+
+
         public Form1()
         {
             InitializeComponent();
 
             mng = new ManageForms(this);
+            mng.SendClick += new ManageForms.SendClickHandler(formOption_Close);
+
             serial = SerialFactory.CreateSerial(this.serialPort1);
             SetSerialPort();
             baza = new DBConnect(Properties.Settings.Default.stringServer,Properties.Settings.Default.stringUID,Properties.Settings.Default.stringDBPassword,Properties.Settings.Default.stringDatabase);
@@ -45,6 +57,17 @@ namespace ProjektFinal
             cmbAggregation.SelectedIndex = 1;
 
             appValidated = false;
+
+            sqlToSaveCollection = new List<string>();
+            dbCollectionMutex = new object();
+
+            saverTo = new SaverToDB();
+
+            ValidateApp();
+        }
+
+        private void formOption_Close(object sender, EventArgs e)
+        {
             ValidateApp();
         }
 
@@ -85,16 +108,11 @@ namespace ProjektFinal
             {
                 return;
             }
-            backgroundSerial.RunWorkerAsync();
             string port = Properties.Settings.Default.stringPortName;
             port = port.Substring(0, port.IndexOf(' '));
             try
             {
                 serial.Open(port, Properties.Settings.Default.intBaudRate);
-
-                pictureSerial.BackColor = Color.Green;
-                pictureBT.BackColor = Color.Green;
-                pictureUControler.BackColor = Color.Green;
             }
             catch(System.IO.IOException ex)
             {
@@ -120,13 +138,13 @@ namespace ProjektFinal
             CloseSerialConnection();
         }
 
-        delegate void delegatForDatabase();
-        private void SetInsertedToDBMessagesNumber()
+        delegate void delegatForIncomingSerial();
+        private void SetIncommingSerialValues()
         {
             bool sendingSuccesfull;
             if (this.numericUpDown1.InvokeRequired)
             {
-                delegatForDatabase d = new delegatForDatabase(SetInsertedToDBMessagesNumber); //dodanie delegata do kolejki
+                delegatForIncomingSerial d = new delegatForIncomingSerial(SetIncommingSerialValues); //dodanie delegata do kolejki
                 this.numericUpDown1.BeginInvoke(d, new object[] { });  //tutej
             }
             else
@@ -139,13 +157,21 @@ namespace ProjektFinal
                         numericTemperature.Value = Convert.ToDecimal(serial.temperature);
                         numericHumidity.Value = Convert.ToDecimal(serial.humidity);
                     }
-                    numericUpDown1.Value = numericUpDown1.Value + 1;
+                    
                 }
                 catch (ArgumentOutOfRangeException ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
             }
+        }
+
+        private void SetDbCountersNumerics(int count, bool correct)
+        {
+            if (correct == true)
+                numericUpDown1.Value = numericUpDown1.Value + count;
+            else
+                numericUpDown2.Value = numericUpDown2.Value + count;
         }
         private void serialPort1_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
@@ -166,13 +192,30 @@ namespace ProjektFinal
 
                     if (result)
                     {
-                        SetInsertedToDBMessagesNumber();
+                        
 
                         temp = serial.temperature;
                         pres = serial.pressure;
                         hum = serial.humidity;
-                        query = baza.CreateInsertQuery(temp, pres, hum);
-                        baza.Insert(query);
+                        query = baza.CreateInsertQuery(DateTime.Now,temp, pres, hum);
+
+                        lock (dbCollectionMutex)
+                        {
+                            sqlToSaveCollection.Add(query);
+                        }
+                        SetIncommingSerialValues();
+                        /*try
+                        {
+                            bool temporary;
+                            temporary = baza.Insert(query);
+
+                            SetInsertedToDBMessagesNumber(temporary);
+                        }catch(Exception ex)
+                        {
+                            SetInsertedToDBMessagesNumber(false);
+                        }*/
+
+
                     }
 
                 } while (result == true);
@@ -188,7 +231,12 @@ namespace ProjektFinal
 
         public void ValidateApp()
         {
-            backgroundValidate.RunWorkerAsync();            
+            baza.Server = Properties.Settings.Default.stringServer;
+            baza.Uid = Properties.Settings.Default.stringUID;
+            baza.Password = Properties.Settings.Default.stringDBPassword;
+            baza.Database = Properties.Settings.Default.stringDatabase;
+            if (!backgroundValidate.IsBusy)
+                backgroundValidate.RunWorkerAsync();            
         }
 
         private void btnDraw_Click(object sender, EventArgs e)
@@ -281,6 +329,70 @@ namespace ProjektFinal
             {
                 pictureDatabase.BackColor = Color.Red;
             }
+        }
+
+        private void backgroundSerial_DoWork(object sender, DoWorkEventArgs e)
+        {
+            
+        }
+
+        private void backgroundSerial_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+        }
+
+        private void timerDatabase_Tick(object sender, EventArgs e)
+        {
+            int count;   
+            lock (dbCollectionMutex)
+            {
+                count = sqlToSaveCollection.Count;
+            }
+            if (count == 0)
+            {
+                return;
+            }
+            if (!backgroundSQLSender.IsBusy)
+            {
+                backgroundSQLSender.RunWorkerAsync();
+            }
+            else
+            {
+                //trudno, niech się kasuje, nie mam pomysłu :/
+                lock (dbCollectionMutex)
+                {
+                    numericUpDown2.Value += sqlToSaveCollection.Count;
+                    sqlToSaveCollection.Clear();
+                }               
+            }
+        }
+
+        private void backgroundSQLSender_DoWork(object sender, DoWorkEventArgs e)
+        {
+            string tempSQL="";
+            int tryToSaveCount;
+            lock (dbCollectionMutex)
+            {
+                foreach(string s in sqlToSaveCollection)
+                {
+                    tempSQL += s + "\n\r";
+                }
+                saverTo.tryToSaveCount = sqlToSaveCollection.Count;
+                sqlToSaveCollection.Clear();
+            }
+            try
+            {
+                saverTo.saveCompletedWithoutError = baza.Insert(tempSQL);
+            }
+            catch(Exception ex)
+            {
+                saverTo.saveCompletedWithoutError = false;
+            }
+        }
+
+        private void backgroundSQLSender_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            SetDbCountersNumerics(saverTo.tryToSaveCount, saverTo.saveCompletedWithoutError);
         }
     }
 }

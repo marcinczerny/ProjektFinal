@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.kontrolaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.opcjeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,14 +83,16 @@
             this.backgroundSerial = new System.ComponentModel.BackgroundWorker();
             this.label6 = new System.Windows.Forms.Label();
             this.labelServerIP = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.phoneClient5 = new ProjektFinal.PhoneClient();
             this.phoneClient4 = new ProjektFinal.PhoneClient();
             this.phoneClient3 = new ProjektFinal.PhoneClient();
             this.phoneClient2 = new ProjektFinal.PhoneClient();
             this.phoneClient1 = new ProjektFinal.PhoneClient();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.timerDatabase = new System.Windows.Forms.Timer(this.components);
+            this.backgroundSQLSender = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             this.tabKontrola.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -548,31 +550,31 @@
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            chartArea2.Name = "ChartArea2";
-            chartArea3.Name = "ChartArea3";
-            this.chart1.ChartAreas.Add(chartArea1);
-            this.chart1.ChartAreas.Add(chartArea2);
-            this.chart1.ChartAreas.Add(chartArea3);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea4.Name = "ChartArea1";
+            chartArea5.Name = "ChartArea2";
+            chartArea6.Name = "ChartArea3";
+            this.chart1.ChartAreas.Add(chartArea4);
+            this.chart1.ChartAreas.Add(chartArea5);
+            this.chart1.ChartAreas.Add(chartArea6);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(23, 30);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.Name = "Temperatura";
-            series2.ChartArea = "ChartArea2";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "Pressure";
-            series3.ChartArea = "ChartArea3";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series3.Legend = "Legend1";
-            series3.Name = "Humidity";
-            this.chart1.Series.Add(series1);
-            this.chart1.Series.Add(series2);
-            this.chart1.Series.Add(series3);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Legend = "Legend1";
+            series4.Name = "Temperatura";
+            series5.ChartArea = "ChartArea2";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series5.Legend = "Legend1";
+            series5.Name = "Pressure";
+            series6.ChartArea = "ChartArea3";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series6.Legend = "Legend1";
+            series6.Name = "Humidity";
+            this.chart1.Series.Add(series4);
+            this.chart1.Series.Add(series5);
+            this.chart1.Series.Add(series6);
             this.chart1.Size = new System.Drawing.Size(1017, 433);
             this.chart1.TabIndex = 25;
             this.chart1.Text = "chart1";
@@ -628,8 +630,15 @@
             // 
             // backgroundValidate
             // 
+            this.backgroundValidate.WorkerSupportsCancellation = true;
             this.backgroundValidate.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundValidate_DoWork);
             this.backgroundValidate.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundValidate_RunWorkerCompleted);
+            // 
+            // backgroundSerial
+            // 
+            this.backgroundSerial.WorkerSupportsCancellation = true;
+            this.backgroundSerial.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundSerial_DoWork);
+            this.backgroundSerial.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundSerial_RunWorkerCompleted);
             // 
             // label6
             // 
@@ -649,6 +658,37 @@
             this.labelServerIP.Size = new System.Drawing.Size(59, 18);
             this.labelServerIP.TabIndex = 19;
             this.labelServerIP.Text = "1.1.1.1";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 46);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(132, 13);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "Poprawnie zapisane dane:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(158, 46);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(95, 13);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "Błędy przy zapisie:";
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Location = new System.Drawing.Point(158, 62);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.ReadOnly = true;
+            this.numericUpDown2.Size = new System.Drawing.Size(132, 20);
+            this.numericUpDown2.TabIndex = 10;
             // 
             // phoneClient5
             // 
@@ -686,36 +726,16 @@
             this.phoneClient1.TabIndex = 13;
             this.phoneClient1.Load += new System.EventHandler(this.phoneClient1_Load);
             // 
-            // label7
+            // timerDatabase
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 46);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(132, 13);
-            this.label7.TabIndex = 9;
-            this.label7.Text = "Poprawnie zapisane dane:";
+            this.timerDatabase.Enabled = true;
+            this.timerDatabase.Interval = 10000;
+            this.timerDatabase.Tick += new System.EventHandler(this.timerDatabase_Tick);
             // 
-            // label8
+            // backgroundSQLSender
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(158, 46);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(95, 13);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "Błędy przy zapisie:";
-            // 
-            // numericUpDown2
-            // 
-            this.numericUpDown2.Location = new System.Drawing.Point(158, 62);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            100000000,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.ReadOnly = true;
-            this.numericUpDown2.Size = new System.Drawing.Size(132, 20);
-            this.numericUpDown2.TabIndex = 10;
+            this.backgroundSQLSender.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundSQLSender_DoWork);
+            this.backgroundSQLSender.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundSQLSender_RunWorkerCompleted);
             // 
             // Form1
             // 
@@ -822,6 +842,8 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Timer timerDatabase;
+        private System.ComponentModel.BackgroundWorker backgroundSQLSender;
     }
 }
 

@@ -76,11 +76,13 @@ namespace SerialConnect
                 try
                 {
                     UART.Open();
+                    UART.DiscardInBuffer();
                 }
                 catch (IOException e)
                 {
                     throw e;
                 }
+                
             }
         }
         public void Close()

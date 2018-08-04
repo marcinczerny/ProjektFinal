@@ -320,7 +320,10 @@ namespace ProjektFinal
 
         private void btnValidateDB_Click(object sender, EventArgs e)
         {
-            backgroundValidateDB.RunWorkerAsync();
+            if (!backgroundValidateDB.IsBusy)
+                backgroundValidateDB.RunWorkerAsync();
+            else
+                MessageBox.Show("Nie można teraz zwalidować bazy");
         }
 
         private void txbServer_TextChanged(object sender, EventArgs e)

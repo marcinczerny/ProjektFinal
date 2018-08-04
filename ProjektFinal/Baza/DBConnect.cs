@@ -68,7 +68,7 @@ namespace BazaDanychMySQL
             {
                 result += desc[i] + cnList[i] + ";";
             }
-
+            result += "Connection Timeout=1;";
             return result;
         }
         public bool ValidateDB()
@@ -138,8 +138,13 @@ namespace BazaDanychMySQL
             return "INSERT INTO tblweathersample (Timestamp, Temperature, Pressure, Humidity) " +
                 "VALUES ( NOW(), " + temp.ToString(nfi) + ", " + pres.ToString(nfi) + ", " + hum.ToString(nfi) + ");";
         }
+        public string CreateInsertQuery(DateTime dateTime, float temp, float pres, float hum)
+        {
+            return "INSERT INTO tblweathersample (Timestamp, Temperature, Pressure, Humidity) " +
+                "VALUES ('" + dateTime.ToString("yyyy-MM-dd HH:mm:ss") +"' , " + temp.ToString(nfi) + ", " + pres.ToString(nfi) + ", " + hum.ToString(nfi) + ");";
+        }
         //Insert statement
-        public void Insert(string query)
+        public bool Insert(string query)
         {
             using(MySqlConnection cn = new MySqlConnection(connectionString))
             {
@@ -151,16 +156,22 @@ namespace BazaDanychMySQL
                     try
                     {
                         cmd.ExecuteNonQuery();
+                        return true;
                     }
                     catch (Exception e)
                     {
-                        MessageBox.Show(query);
+                        throw e;
+                        return false;
                     }
                     //Execute command
 
 
                     //close connection
                     this.CloseConnection(cn);
+                }
+                else
+                {
+                    return false;
                 }
             
             }
