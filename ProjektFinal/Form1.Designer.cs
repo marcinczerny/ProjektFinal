@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.kontrolaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.opcjeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,8 +44,20 @@
             this.tabKontrola = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnStopServer = new System.Windows.Forms.Button();
+            this.btnStartServer = new System.Windows.Forms.Button();
+            this.labelServerIP = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.phoneClient5 = new ProjektFinal.PhoneClient();
+            this.phoneClient4 = new ProjektFinal.PhoneClient();
+            this.phoneClient3 = new ProjektFinal.PhoneClient();
+            this.phoneClient2 = new ProjektFinal.PhoneClient();
+            this.phoneClient1 = new ProjektFinal.PhoneClient();
             this.pictureServer = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.pictureDatabase = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -55,11 +67,6 @@
             this.numericHumidity = new System.Windows.Forms.NumericUpDown();
             this.numericPressure = new System.Windows.Forms.NumericUpDown();
             this.numericTemperature = new System.Windows.Forms.NumericUpDown();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureDiode1 = new System.Windows.Forms.PictureBox();
             this.pictureUControler = new System.Windows.Forms.PictureBox();
             this.pictureSerial = new System.Windows.Forms.PictureBox();
             this.pictureBT = new System.Windows.Forms.PictureBox();
@@ -81,35 +88,26 @@
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.backgroundValidate = new System.ComponentModel.BackgroundWorker();
             this.backgroundSerial = new System.ComponentModel.BackgroundWorker();
-            this.label6 = new System.Windows.Forms.Label();
-            this.labelServerIP = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.phoneClient5 = new ProjektFinal.PhoneClient();
-            this.phoneClient4 = new ProjektFinal.PhoneClient();
-            this.phoneClient3 = new ProjektFinal.PhoneClient();
-            this.phoneClient2 = new ProjektFinal.PhoneClient();
-            this.phoneClient1 = new ProjektFinal.PhoneClient();
             this.timerDatabase = new System.Windows.Forms.Timer(this.components);
             this.backgroundSQLSender = new System.ComponentModel.BackgroundWorker();
+            this.ledLight1 = new ProjektFinal.LedLight();
+            this.ledLight2 = new ProjektFinal.LedLight();
+            this.ledLight3 = new ProjektFinal.LedLight();
+            this.ledLight4 = new ProjektFinal.LedLight();
+            this.ledLight5 = new ProjektFinal.LedLight();
             this.menuStrip1.SuspendLayout();
             this.tabKontrola.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureServer)).BeginInit();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureDatabase)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericHumidity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericPressure)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericTemperature)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureDiode1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureUControler)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureSerial)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBT)).BeginInit();
@@ -117,7 +115,6 @@
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmrUnits)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -186,6 +183,8 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.btnStopServer);
+            this.groupBox4.Controls.Add(this.btnStartServer);
             this.groupBox4.Controls.Add(this.labelServerIP);
             this.groupBox4.Controls.Add(this.label6);
             this.groupBox4.Controls.Add(this.phoneClient5);
@@ -196,10 +195,101 @@
             this.groupBox4.Controls.Add(this.pictureServer);
             this.groupBox4.Location = new System.Drawing.Point(674, 6);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(571, 626);
+            this.groupBox4.Size = new System.Drawing.Size(571, 643);
             this.groupBox4.TabIndex = 18;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Serwer";
+            // 
+            // btnStopServer
+            // 
+            this.btnStopServer.Enabled = false;
+            this.btnStopServer.Location = new System.Drawing.Point(200, 78);
+            this.btnStopServer.Name = "btnStopServer";
+            this.btnStopServer.Size = new System.Drawing.Size(108, 23);
+            this.btnStopServer.TabIndex = 21;
+            this.btnStopServer.Text = "Zamknij Serwer";
+            this.btnStopServer.UseVisualStyleBackColor = true;
+            this.btnStopServer.Click += new System.EventHandler(this.btnStopServer_Click);
+            // 
+            // btnStartServer
+            // 
+            this.btnStartServer.Location = new System.Drawing.Point(52, 78);
+            this.btnStartServer.Name = "btnStartServer";
+            this.btnStartServer.Size = new System.Drawing.Size(108, 23);
+            this.btnStartServer.TabIndex = 20;
+            this.btnStartServer.Text = "Uruchom Serwer";
+            this.btnStartServer.UseVisualStyleBackColor = true;
+            this.btnStartServer.Click += new System.EventHandler(this.btnStartServer_Click);
+            // 
+            // labelServerIP
+            // 
+            this.labelServerIP.AutoSize = true;
+            this.labelServerIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelServerIP.Location = new System.Drawing.Point(52, 404);
+            this.labelServerIP.Name = "labelServerIP";
+            this.labelServerIP.Size = new System.Drawing.Size(59, 18);
+            this.labelServerIP.TabIndex = 19;
+            this.labelServerIP.Text = "1.1.1.1";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(52, 387);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(50, 13);
+            this.label6.TabIndex = 18;
+            this.label6.Text = "Adres IP:";
+            // 
+            // phoneClient5
+            // 
+            this.phoneClient5.Connected = false;
+            this.phoneClient5.ID = null;
+            this.phoneClient5.Ip = null;
+            this.phoneClient5.Location = new System.Drawing.Point(375, 19);
+            this.phoneClient5.Name = "phoneClient5";
+            this.phoneClient5.Size = new System.Drawing.Size(157, 197);
+            this.phoneClient5.TabIndex = 17;
+            // 
+            // phoneClient4
+            // 
+            this.phoneClient4.Connected = false;
+            this.phoneClient4.ID = null;
+            this.phoneClient4.Ip = null;
+            this.phoneClient4.Location = new System.Drawing.Point(375, 222);
+            this.phoneClient4.Name = "phoneClient4";
+            this.phoneClient4.Size = new System.Drawing.Size(157, 202);
+            this.phoneClient4.TabIndex = 16;
+            // 
+            // phoneClient3
+            // 
+            this.phoneClient3.Connected = false;
+            this.phoneClient3.ID = null;
+            this.phoneClient3.Ip = null;
+            this.phoneClient3.Location = new System.Drawing.Point(375, 430);
+            this.phoneClient3.Name = "phoneClient3";
+            this.phoneClient3.Size = new System.Drawing.Size(157, 207);
+            this.phoneClient3.TabIndex = 15;
+            // 
+            // phoneClient2
+            // 
+            this.phoneClient2.Connected = false;
+            this.phoneClient2.ID = null;
+            this.phoneClient2.Ip = null;
+            this.phoneClient2.Location = new System.Drawing.Point(188, 430);
+            this.phoneClient2.Name = "phoneClient2";
+            this.phoneClient2.Size = new System.Drawing.Size(157, 207);
+            this.phoneClient2.TabIndex = 14;
+            // 
+            // phoneClient1
+            // 
+            this.phoneClient1.Connected = false;
+            this.phoneClient1.ID = null;
+            this.phoneClient1.Ip = null;
+            this.phoneClient1.Location = new System.Drawing.Point(6, 430);
+            this.phoneClient1.Name = "phoneClient1";
+            this.phoneClient1.Size = new System.Drawing.Size(157, 207);
+            this.phoneClient1.TabIndex = 13;
+            this.phoneClient1.Load += new System.EventHandler(this.phoneClient1_Load);
             // 
             // pictureServer
             // 
@@ -221,10 +311,41 @@
             this.groupBox3.Controls.Add(this.pictureDatabase);
             this.groupBox3.Location = new System.Drawing.Point(360, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(296, 629);
+            this.groupBox3.Size = new System.Drawing.Size(296, 646);
             this.groupBox3.TabIndex = 12;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Baza Danych";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(158, 46);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(95, 13);
+            this.label8.TabIndex = 11;
+            this.label8.Text = "Błędy przy zapisie:";
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Location = new System.Drawing.Point(158, 62);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.ReadOnly = true;
+            this.numericUpDown2.Size = new System.Drawing.Size(132, 20);
+            this.numericUpDown2.TabIndex = 10;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 46);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(132, 13);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "Poprawnie zapisane dane:";
             // 
             // numericUpDown1
             // 
@@ -252,24 +373,24 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.ledLight5);
+            this.groupBox2.Controls.Add(this.ledLight3);
+            this.groupBox2.Controls.Add(this.ledLight4);
+            this.groupBox2.Controls.Add(this.ledLight2);
+            this.groupBox2.Controls.Add(this.ledLight1);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.numericHumidity);
             this.groupBox2.Controls.Add(this.numericPressure);
             this.groupBox2.Controls.Add(this.numericTemperature);
-            this.groupBox2.Controls.Add(this.pictureBox4);
-            this.groupBox2.Controls.Add(this.pictureBox2);
-            this.groupBox2.Controls.Add(this.pictureBox3);
-            this.groupBox2.Controls.Add(this.pictureBox1);
-            this.groupBox2.Controls.Add(this.pictureDiode1);
             this.groupBox2.Controls.Add(this.pictureUControler);
             this.groupBox2.Controls.Add(this.pictureSerial);
             this.groupBox2.Controls.Add(this.pictureBT);
             this.groupBox2.Controls.Add(this.groupBox1);
             this.groupBox2.Location = new System.Drawing.Point(0, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(354, 626);
+            this.groupBox2.Size = new System.Drawing.Size(354, 643);
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Mikrokontroler";
@@ -357,56 +478,6 @@
             this.numericTemperature.ReadOnly = true;
             this.numericTemperature.Size = new System.Drawing.Size(86, 20);
             this.numericTemperature.TabIndex = 13;
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Image = global::ProjektFinal.Properties.Resources.diodeOff;
-            this.pictureBox4.Location = new System.Drawing.Point(283, 503);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(64, 64);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox4.TabIndex = 12;
-            this.pictureBox4.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::ProjektFinal.Properties.Resources.diodeOff;
-            this.pictureBox2.Location = new System.Drawing.Point(213, 503);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(64, 64);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox2.TabIndex = 11;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = global::ProjektFinal.Properties.Resources.diodeOff;
-            this.pictureBox3.Location = new System.Drawing.Point(143, 503);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(64, 64);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox3.TabIndex = 10;
-            this.pictureBox3.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::ProjektFinal.Properties.Resources.diodeOff;
-            this.pictureBox1.Location = new System.Drawing.Point(73, 503);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(64, 64);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 9;
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureDiode1
-            // 
-            this.pictureDiode1.Image = global::ProjektFinal.Properties.Resources.diodeOff;
-            this.pictureDiode1.Location = new System.Drawing.Point(3, 503);
-            this.pictureDiode1.Name = "pictureDiode1";
-            this.pictureDiode1.Size = new System.Drawing.Size(64, 64);
-            this.pictureDiode1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureDiode1.TabIndex = 8;
-            this.pictureDiode1.TabStop = false;
             // 
             // pictureUControler
             // 
@@ -550,31 +621,31 @@
             // 
             // chart1
             // 
-            chartArea4.Name = "ChartArea1";
-            chartArea5.Name = "ChartArea2";
-            chartArea6.Name = "ChartArea3";
-            this.chart1.ChartAreas.Add(chartArea4);
-            this.chart1.ChartAreas.Add(chartArea5);
-            this.chart1.ChartAreas.Add(chartArea6);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            chartArea2.Name = "ChartArea2";
+            chartArea3.Name = "ChartArea3";
+            this.chart1.ChartAreas.Add(chartArea1);
+            this.chart1.ChartAreas.Add(chartArea2);
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(23, 30);
             this.chart1.Name = "chart1";
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series4.Legend = "Legend1";
-            series4.Name = "Temperatura";
-            series5.ChartArea = "ChartArea2";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series5.Legend = "Legend1";
-            series5.Name = "Pressure";
-            series6.ChartArea = "ChartArea3";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series6.Legend = "Legend1";
-            series6.Name = "Humidity";
-            this.chart1.Series.Add(series4);
-            this.chart1.Series.Add(series5);
-            this.chart1.Series.Add(series6);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "Temperatura";
+            series2.ChartArea = "ChartArea2";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.Name = "Pressure";
+            series3.ChartArea = "ChartArea3";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Legend = "Legend1";
+            series3.Name = "Humidity";
+            this.chart1.Series.Add(series1);
+            this.chart1.Series.Add(series2);
+            this.chart1.Series.Add(series3);
             this.chart1.Size = new System.Drawing.Size(1017, 433);
             this.chart1.TabIndex = 25;
             this.chart1.Text = "chart1";
@@ -640,92 +711,6 @@
             this.backgroundSerial.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundSerial_DoWork);
             this.backgroundSerial.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundSerial_RunWorkerCompleted);
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(52, 387);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(50, 13);
-            this.label6.TabIndex = 18;
-            this.label6.Text = "Adres IP:";
-            // 
-            // labelServerIP
-            // 
-            this.labelServerIP.AutoSize = true;
-            this.labelServerIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelServerIP.Location = new System.Drawing.Point(52, 404);
-            this.labelServerIP.Name = "labelServerIP";
-            this.labelServerIP.Size = new System.Drawing.Size(59, 18);
-            this.labelServerIP.TabIndex = 19;
-            this.labelServerIP.Text = "1.1.1.1";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 46);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(132, 13);
-            this.label7.TabIndex = 9;
-            this.label7.Text = "Poprawnie zapisane dane:";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(158, 46);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(95, 13);
-            this.label8.TabIndex = 11;
-            this.label8.Text = "Błędy przy zapisie:";
-            // 
-            // numericUpDown2
-            // 
-            this.numericUpDown2.Location = new System.Drawing.Point(158, 62);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            100000000,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.ReadOnly = true;
-            this.numericUpDown2.Size = new System.Drawing.Size(132, 20);
-            this.numericUpDown2.TabIndex = 10;
-            // 
-            // phoneClient5
-            // 
-            this.phoneClient5.Location = new System.Drawing.Point(375, 19);
-            this.phoneClient5.Name = "phoneClient5";
-            this.phoneClient5.Size = new System.Drawing.Size(157, 185);
-            this.phoneClient5.TabIndex = 17;
-            // 
-            // phoneClient4
-            // 
-            this.phoneClient4.Location = new System.Drawing.Point(375, 222);
-            this.phoneClient4.Name = "phoneClient4";
-            this.phoneClient4.Size = new System.Drawing.Size(157, 185);
-            this.phoneClient4.TabIndex = 16;
-            // 
-            // phoneClient3
-            // 
-            this.phoneClient3.Location = new System.Drawing.Point(375, 430);
-            this.phoneClient3.Name = "phoneClient3";
-            this.phoneClient3.Size = new System.Drawing.Size(157, 185);
-            this.phoneClient3.TabIndex = 15;
-            // 
-            // phoneClient2
-            // 
-            this.phoneClient2.Location = new System.Drawing.Point(188, 430);
-            this.phoneClient2.Name = "phoneClient2";
-            this.phoneClient2.Size = new System.Drawing.Size(157, 185);
-            this.phoneClient2.TabIndex = 14;
-            // 
-            // phoneClient1
-            // 
-            this.phoneClient1.Location = new System.Drawing.Point(6, 430);
-            this.phoneClient1.Name = "phoneClient1";
-            this.phoneClient1.Size = new System.Drawing.Size(157, 185);
-            this.phoneClient1.TabIndex = 13;
-            this.phoneClient1.Load += new System.EventHandler(this.phoneClient1_Load);
-            // 
             // timerDatabase
             // 
             this.timerDatabase.Enabled = true;
@@ -736,6 +721,41 @@
             // 
             this.backgroundSQLSender.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundSQLSender_DoWork);
             this.backgroundSQLSender.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundSQLSender_RunWorkerCompleted);
+            // 
+            // ledLight1
+            // 
+            this.ledLight1.Location = new System.Drawing.Point(6, 524);
+            this.ledLight1.Name = "ledLight1";
+            this.ledLight1.Size = new System.Drawing.Size(69, 70);
+            this.ledLight1.TabIndex = 19;
+            // 
+            // ledLight2
+            // 
+            this.ledLight2.Location = new System.Drawing.Point(81, 524);
+            this.ledLight2.Name = "ledLight2";
+            this.ledLight2.Size = new System.Drawing.Size(69, 70);
+            this.ledLight2.TabIndex = 20;
+            // 
+            // ledLight3
+            // 
+            this.ledLight3.Location = new System.Drawing.Point(147, 524);
+            this.ledLight3.Name = "ledLight3";
+            this.ledLight3.Size = new System.Drawing.Size(69, 70);
+            this.ledLight3.TabIndex = 22;
+            // 
+            // ledLight4
+            // 
+            this.ledLight4.Location = new System.Drawing.Point(219, 524);
+            this.ledLight4.Name = "ledLight4";
+            this.ledLight4.Size = new System.Drawing.Size(69, 70);
+            this.ledLight4.TabIndex = 21;
+            // 
+            // ledLight5
+            // 
+            this.ledLight5.Location = new System.Drawing.Point(285, 524);
+            this.ledLight5.Name = "ledLight5";
+            this.ledLight5.Size = new System.Drawing.Size(69, 70);
+            this.ledLight5.TabIndex = 23;
             // 
             // Form1
             // 
@@ -758,6 +778,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureServer)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureDatabase)).EndInit();
             this.groupBox2.ResumeLayout(false);
@@ -765,11 +786,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericHumidity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericPressure)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericTemperature)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureDiode1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureUControler)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureSerial)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBT)).EndInit();
@@ -779,7 +795,6 @@
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmrUnits)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -819,11 +834,6 @@
         private PhoneClient phoneClient2;
         private PhoneClient phoneClient1;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.PictureBox pictureDiode1;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button btnDraw;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox cmbAggregation;
@@ -844,6 +854,13 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Timer timerDatabase;
         private System.ComponentModel.BackgroundWorker backgroundSQLSender;
+        private System.Windows.Forms.Button btnStartServer;
+        private System.Windows.Forms.Button btnStopServer;
+        private LedLight ledLight5;
+        private LedLight ledLight3;
+        private LedLight ledLight4;
+        private LedLight ledLight2;
+        private LedLight ledLight1;
     }
 }
 

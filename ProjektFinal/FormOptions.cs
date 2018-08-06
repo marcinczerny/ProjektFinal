@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SerialConnect;
 using BazaDanychMySQL;
+using System.Net;
+using System.Text.RegularExpressions;
 
 namespace ProjektFinal
 {
@@ -25,6 +27,9 @@ namespace ProjektFinal
 
         DBConnect baza;
         bool bazaValidated;
+
+        string serverIP;
+        string port;
         public FormOptions()
         {
             InitializeComponent();
@@ -76,6 +81,10 @@ namespace ProjektFinal
             txbDatabase.Text = Properties.Settings.Default.stringDatabase;
 
             bazaValidated = false;
+
+            txbServerIp.Text = ProjektFinal.Server.IpAdressBiulder.GetIp(Properties.Settings.Default.stringServerIp);
+            maskedPortServer.Text = ProjektFinal.Server.IpAdressBiulder.GetPort(Properties.Settings.Default.stringServerIp);
+           
         }
 
         
@@ -391,6 +400,53 @@ namespace ProjektFinal
             }
             
             Cursor.Current = Cursors.Default;
+        }
+
+        private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
+        }
+
+        private void maskedTextBox1_Validated(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void maskedTextBox1_MaskInputRejected_1(object sender, MaskInputRejectedEventArgs e)
+        {
+
+        }
+
+        private void txbServerIp_Validated(object sender, EventArgs e)
+        {
+            ValidateIpParameters();
+        }
+
+        private void ValidateIpParameters()
+        {
+            IPAddress ipAddress;
+
+            string ip = txbServerIp.Text;
+            ip = Regex.Replace(ip, @"[^a-zA-Z0-9\-.]", "");
+
+            if (IPAddress.TryParse(ip, out ipAddress))
+            {
+                string lol = ProjektFinal.Server.IpAdressBiulder.CreateIpAdress(ip, maskedPortServer.Text);
+                Properties.Settings.Default.stringServerIp = lol;
+                    
+                Properties.Settings.Default.Save();
+                //valid ip
+            }
+            else
+            {
+                //is not valid ip
+                MessageBox.Show("Nieprawidłowe IP!");
+            }
+        }
+
+        private void maskedPortServer_Validated(object sender, EventArgs e)
+        {
+            ValidateIpParameters();
         }
     }
 }

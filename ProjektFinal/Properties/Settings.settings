@@ -32,5 +32,8 @@
     <Setting Name="stringDatabase" Type="System.String" Scope="User">
       <Value Profile="(Default)">weather</Value>
     </Setting>
+    <Setting Name="stringServerIp" Type="System.String" Scope="User">
+      <Value Profile="(Default)">tcp://192.168.1.2:8060/</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

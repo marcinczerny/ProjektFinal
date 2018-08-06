@@ -10,7 +10,7 @@ using MySql.Data.MySqlClient;
 
 namespace BazaDanychMySQL
 {
-    class DBConnect
+    public class DBConnect
     {
         private string server;
         private string database;

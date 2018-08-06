@@ -142,5 +142,17 @@ namespace ProjektFinal.Properties {
                 this["stringDatabase"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("tcp://192.168.1.2:8060/")]
+        public string stringServerIp {
+            get {
+                return ((string)(this["stringServerIp"]));
+            }
+            set {
+                this["stringServerIp"] = value;
+            }
+        }
     }
 }

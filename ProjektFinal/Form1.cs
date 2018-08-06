@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SerialConnect;
 using BazaDanychMySQL;
+using ProjektFinal.Server;
+using Eneter.Messaging.MessagingSystems.MessagingSystemBase;
 
 namespace ProjektFinal
 {
@@ -33,7 +35,9 @@ namespace ProjektFinal
         bool appValidated;
         SaverToDB saverTo;
 
+        WinFormServiceApplication.Server server;
 
+        List<PhoneClient> phoneClients;
         public Form1()
         {
             InitializeComponent();
@@ -63,7 +67,156 @@ namespace ProjektFinal
 
             saverTo = new SaverToDB();
 
+            server = new WinFormServiceApplication.Server();
+            server.SendConnectedClient += new WinFormServiceApplication.Server.SendClientConnectionStatus(ServerConnection_Change);
+            server.SenDisconnectedClient += new WinFormServiceApplication.Server.SendClientDisconnectionStatus(Server_DisconnectedClient);
+            server.SendLedInfo += new WinFormServiceApplication.Server.SendLedConfirmation(LightLed);
+
+            phoneClients = new List<PhoneClient>();
+            phoneClients.Add(phoneClient1);
+            phoneClient1.SenDisconnectedClient += new PhoneClient.SendDisconnectBtnPressed(client1_Disconnect);
+            phoneClients.Add(phoneClient2);
+            phoneClient2.SenDisconnectedClient += new PhoneClient.SendDisconnectBtnPressed(client2_Disconnect);
+            phoneClients.Add(phoneClient3);
+            phoneClient3.SenDisconnectedClient += new PhoneClient.SendDisconnectBtnPressed(client3_Disconnect);
+            phoneClients.Add(phoneClient4);
+            phoneClient4.SenDisconnectedClient += new PhoneClient.SendDisconnectBtnPressed(client4_Disconnect);
+            phoneClients.Add(phoneClient5);
+            phoneClient5.SenDisconnectedClient += new PhoneClient.SendDisconnectBtnPressed(client5_Disconnect);
+
             ValidateApp();
+        }
+
+        private delegate void TurnLedOn(int number);
+        private void TurnLed(int number)
+        {
+            if (this.ledLight1.InvokeRequired)
+            {
+                TurnLedOn d = new TurnLedOn(TurnLed);
+                this.ledLight1.BeginInvoke(d, new object[] {number });  //tutej
+            }
+            else
+            {
+                switch (number)
+                {
+                    case 1:
+                        ledLight1.Start();
+                        break;
+                    case 2:
+                        ledLight2.Start();
+                        break;
+                    case 3:
+                        ledLight3.Start();
+                        break;
+                    case 4:
+                        ledLight4.Start();
+                        break;
+                    case 5:
+                        ledLight5.Start();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        private void LightLed(object sender, LedSerialArgs e)
+        {
+            TurnLed(e.LedNumber);
+        }
+
+        private void Server_SendLedInfo(object sender, LedSerialArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void client5_Disconnect(object sender, EventArgs e)
+        {
+            server.Disconnect(phoneClient5.ID);
+        }
+
+        private void client4_Disconnect(object sender, EventArgs e)
+        {
+            server.Disconnect(phoneClient4.ID);
+        }
+
+        private void client3_Disconnect(object sender, EventArgs e)
+        {
+            server.Disconnect(phoneClient3.ID);
+        }
+
+        private void client2_Disconnect(object sender, EventArgs e)
+        {
+            server.Disconnect(phoneClient2.ID);
+        }
+
+        private void client1_Disconnect(object sender, EventArgs e)
+        {
+            server.Disconnect(phoneClient1.ID);
+        }
+
+        private void Server_DisconnectedClient(object sender, ResponseReceiverEventArgs e)
+        {
+            ChangeClientState(e.ResponseReceiverId, e.SenderAddress, false);
+        }
+
+        private void ServerConnection_Change(object sender, ResponseReceiverEventArgs e)
+        {
+            ChangeClientState(e.ResponseReceiverId, e.SenderAddress,true);
+        }
+
+
+        private delegate void ManageServerClients(string id, string ip, bool connectionState);
+        private void ChangeClientState(string id, string ip, bool connectionStatus)
+        {
+            if (this.phoneClient1.InvokeRequired)
+            {
+                ManageServerClients d = new ManageServerClients(ChangeClientState);
+                this.phoneClient1.BeginInvoke(d, new object[] { id, ip, connectionStatus });
+            }
+            else
+            {
+                foreach(PhoneClient phone in phoneClients)
+                {
+                    if(phone.Connected != connectionStatus)
+                    {
+                        if(connectionStatus == true)
+                        {
+                            ConnectPhone(phone, id, ip);
+                            return;
+                        }
+                        else
+                        {
+                            if(DisconnectPhone(phone, id, ip) == true)
+                            {
+                                return;
+                            }
+                        }
+
+                       
+                    }
+                }
+            }
+        }
+
+        private bool DisconnectPhone(PhoneClient phone, string id, string ip)
+        {
+            if(phone.ID == id)
+            {
+                phone.Disconnect();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+                
+        }
+
+        private void ConnectPhone(PhoneClient phone, string id, string ip)
+        {
+            phone.ID = id;
+            phone.Ip = ip;
+            phone.Connect();
         }
 
         private void formOption_Close(object sender, EventArgs e)
@@ -82,6 +235,7 @@ namespace ProjektFinal
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             serial.Close();
+            server.Close();
         }
 
         public void SetSerialPort()
@@ -236,7 +390,8 @@ namespace ProjektFinal
             baza.Password = Properties.Settings.Default.stringDBPassword;
             baza.Database = Properties.Settings.Default.stringDatabase;
             if (!backgroundValidate.IsBusy)
-                backgroundValidate.RunWorkerAsync();            
+                backgroundValidate.RunWorkerAsync();
+
         }
 
         private void btnDraw_Click(object sender, EventArgs e)
@@ -393,6 +548,38 @@ namespace ProjektFinal
         private void backgroundSQLSender_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             SetDbCountersNumerics(saverTo.tryToSaveCount, saverTo.saveCompletedWithoutError);
+        }
+
+        private void btnStartServer_Click(object sender, EventArgs e)
+        {
+            server.Serial = serial;
+            server.Baza = baza;
+            server.ServerIp = Properties.Settings.Default.stringServerIp;
+            try
+            {
+                server.Start();
+                btnStartServer.Enabled = false;
+                pictureServer.BackColor = Color.Green;
+                btnStopServer.Enabled = true;
+                labelServerIP.Text = Properties.Settings.Default.stringServerIp;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Nie można połączyć z serwerem \n\r" + ex.Message);
+            }
+
+        }
+
+        private void btnStopServer_Click(object sender, EventArgs e)
+        {
+            server.Close();
+            btnStopServer.Enabled = false;
+            btnStartServer.Enabled = true;
+            pictureServer.BackColor = Color.DarkRed;
+            foreach(PhoneClient phone in phoneClients)
+            {
+                phone.Disconnect();
+            }
         }
     }
 }

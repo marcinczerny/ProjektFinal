@@ -73,6 +73,11 @@ namespace ProjektFinal
             this.bntCancelSerialTest = new System.Windows.Forms.Button();
             this.btnStartSerialTest = new System.Windows.Forms.Button();
             this.tabServer = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.txbServerIp = new System.Windows.Forms.TextBox();
+            this.maskedPortServer = new System.Windows.Forms.MaskedTextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
             this.tabDB = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.btnValidateDB = new System.Windows.Forms.Button();
@@ -101,6 +106,8 @@ namespace ProjektFinal
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.tabServer.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.tabDB.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -536,6 +543,7 @@ namespace ProjektFinal
             // 
             // tabServer
             // 
+            this.tabServer.Controls.Add(this.groupBox6);
             this.tabServer.Location = new System.Drawing.Point(4, 22);
             this.tabServer.Name = "tabServer";
             this.tabServer.Padding = new System.Windows.Forms.Padding(3);
@@ -543,6 +551,54 @@ namespace ProjektFinal
             this.tabServer.TabIndex = 1;
             this.tabServer.Text = "Ustawienia Serwera";
             this.tabServer.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.txbServerIp);
+            this.groupBox6.Controls.Add(this.maskedPortServer);
+            this.groupBox6.Controls.Add(this.label20);
+            this.groupBox6.Controls.Add(this.label19);
+            this.groupBox6.Location = new System.Drawing.Point(8, 6);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(776, 96);
+            this.groupBox6.TabIndex = 1;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Połączenie";
+            // 
+            // txbServerIp
+            // 
+            this.txbServerIp.Location = new System.Drawing.Point(28, 41);
+            this.txbServerIp.Name = "txbServerIp";
+            this.txbServerIp.Size = new System.Drawing.Size(100, 20);
+            this.txbServerIp.TabIndex = 4;
+            this.txbServerIp.Validated += new System.EventHandler(this.txbServerIp_Validated);
+            // 
+            // maskedPortServer
+            // 
+            this.maskedPortServer.Location = new System.Drawing.Point(205, 41);
+            this.maskedPortServer.Mask = "####";
+            this.maskedPortServer.Name = "maskedPortServer";
+            this.maskedPortServer.Size = new System.Drawing.Size(43, 20);
+            this.maskedPortServer.TabIndex = 3;
+            this.maskedPortServer.Validated += new System.EventHandler(this.maskedPortServer_Validated);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(202, 16);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(29, 13);
+            this.label20.TabIndex = 1;
+            this.label20.Text = "Port:";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(25, 16);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(49, 13);
+            this.label19.TabIndex = 0;
+            this.label19.Text = "Adres Ip:";
             // 
             // tabDB
             // 
@@ -731,6 +787,11 @@ namespace ProjektFinal
             // nmrDeleteCount
             // 
             this.nmrDeleteCount.Location = new System.Drawing.Point(172, 47);
+            this.nmrDeleteCount.Maximum = new decimal(new int[] {
+            -159383552,
+            46653770,
+            5421,
+            0});
             this.nmrDeleteCount.Name = "nmrDeleteCount";
             this.nmrDeleteCount.Size = new System.Drawing.Size(120, 20);
             this.nmrDeleteCount.TabIndex = 1;
@@ -738,6 +799,11 @@ namespace ProjektFinal
             // nmrStatCount
             // 
             this.nmrStatCount.Location = new System.Drawing.Point(15, 47);
+            this.nmrStatCount.Maximum = new decimal(new int[] {
+            -159383552,
+            46653770,
+            5421,
+            0});
             this.nmrStatCount.Name = "nmrStatCount";
             this.nmrStatCount.Size = new System.Drawing.Size(120, 20);
             this.nmrStatCount.TabIndex = 0;
@@ -771,6 +837,9 @@ namespace ProjektFinal
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.tabServer.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.tabDB.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
@@ -868,5 +937,10 @@ namespace ProjektFinal
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button btnValidateDB;
         private System.ComponentModel.BackgroundWorker backgroundValidateDB;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.MaskedTextBox maskedPortServer;
+        private System.Windows.Forms.TextBox txbServerIp;
     }
 }
