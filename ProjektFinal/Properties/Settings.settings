@@ -3,16 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="charEndOfSerialFrame" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#</Value>
+      <Value Profile="(Default)">&amp;</Value>
     </Setting>
     <Setting Name="charBeginOfTemperature" Type="System.String" Scope="User">
-      <Value Profile="(Default)">$</Value>
+      <Value Profile="(Default)">T</Value>
     </Setting>
     <Setting Name="charBeginOfPressure" Type="System.String" Scope="User">
-      <Value Profile="(Default)">%</Value>
+      <Value Profile="(Default)">P</Value>
     </Setting>
     <Setting Name="charBeginOfHumidity" Type="System.String" Scope="User">
-      <Value Profile="(Default)">^</Value>
+      <Value Profile="(Default)">H</Value>
     </Setting>
     <Setting Name="stringPortName" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
