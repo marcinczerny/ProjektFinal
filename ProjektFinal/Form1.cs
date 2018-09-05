@@ -11,6 +11,7 @@ using SerialConnect;
 using BazaDanychMySQL;
 using ProjektFinal.Server;
 using Eneter.Messaging.MessagingSystems.MessagingSystemBase;
+using System.Diagnostics;
 
 namespace ProjektFinal
 {
@@ -356,6 +357,7 @@ namespace ProjektFinal
                         temp = serial.temperature;
                         pres = serial.pressure;
                         hum = serial.humidity;
+                        Debug.WriteLine($"T: {temp}, H: {hum}, P: {pres}");
                         query = baza.CreateInsertQuery(DateTime.Now,temp, pres, hum);
                         lock (server.sampleMutex)
                         {
