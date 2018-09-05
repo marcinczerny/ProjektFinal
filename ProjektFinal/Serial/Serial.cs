@@ -128,6 +128,10 @@ namespace SerialConnect
 
       }
     }
+    public static string[] GetShortPortNames()
+        {
+            return SerialPort.GetPortNames();
+        }
     public static List<string> GetPortNames() {
       List<string> result = new List<string>();
 
@@ -195,6 +199,6 @@ namespace SerialConnect
       return true;
     }
 
-
-  }
+        
+    }
 }
