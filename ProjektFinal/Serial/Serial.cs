@@ -148,8 +148,15 @@ namespace SerialConnect
             return result;
         }
 
-        
-            public bool DecodeMessage(ref string message)
+
+        public static string[] GetShortPortNames()
+        {
+            var result = SerialPort.GetPortNames();
+
+            return result;
+        }
+
+        public bool DecodeMessage(ref string message)
         {
             message = leftInBuffer + message;
             

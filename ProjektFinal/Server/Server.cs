@@ -11,6 +11,13 @@ using BazaDanychMySQL;
 
 namespace WinFormServiceApplication
 {
+    public struct DataReceived
+    {
+        public DateTime timestamp;
+        public float temperature;
+        public float humidity;
+        public float pressure;
+    }
     public class Server
     {
 
@@ -30,8 +37,16 @@ namespace WinFormServiceApplication
 
         public delegate void SendLedConfirmation(object sender, LedSerialArgs e);
         public event SendLedConfirmation SendLedInfo;
+
+
+        //pomocnicze dla serwera, w przypadku gdy użytkownik chce od nas ostatnią próbkę - nie zwracamy jej z bazy tylko z poniższej listy
+        public object sampleMutex;
+        public List<DataReceived> dataReceiveds;
         public Server()
         {
+
+            sampleMutex = new object();
+            dataReceiveds = new List<DataReceived>();
             // Create message receiver.
             IDuplexTypedMessagesFactory aReceiverFactory = new DuplexTypedMessagesFactory();
             myReceiver = aReceiverFactory.CreateDuplexTypedMessageReceiver<MyResponse, MyRequest>();
@@ -97,37 +112,68 @@ namespace WinFormServiceApplication
 
         private MyResponse SendWeatherInfo(timespan ts, int count)
         {
-
-            string query = Baza.CreateSelectQuery(ts, count, true);
-
-            List<string>[] result = new List<string>[4];
-            result = Baza.Select(query);
-
-            try
+            MyResponse resp;
+            if (ts == timespan.sample)
             {
-                DateTime lol = DateTime.Parse(result[0][0]);
-                MyResponse resp = new MyResponse();
-                resp.Temperature = Convert.ToSingle((result[1][0]));
-                resp.Pressure = Convert.ToSingle(result[2][0]);
-                resp.Humidity = Convert.ToSingle(result[3][0]);
-                resp.Time = (Int32)(lol.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+                lock (sampleMutex)
+                {
+                    if(count < dataReceiveds.Count)
+                    {
+                        DataReceived temp = dataReceiveds[(dataReceiveds.Count - count)];
+                        resp = new MyResponse() { Time = (int)temp.timestamp.Subtract(new DateTime(1970, 1, 1)).TotalSeconds, Temperature = temp.temperature, Humidity = temp.humidity, Pressure = temp.pressure };
+                    }
+                    else
+                    {
+                        if(dataReceiveds.Count > 0)
+                        {
+                            DataReceived temp = dataReceiveds[0];
+                            resp = new MyResponse() { Time = (int)temp.timestamp.Subtract(new DateTime(1970, 1, 1)).TotalSeconds, Temperature = temp.temperature, Humidity = temp.humidity, Pressure = temp.pressure };
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    
+                    
 
+                }
                 return resp;
             }
-            catch (ArgumentNullException ex)
+            else
             {
-                return null;
-                //MessageBox.Show("Brak argumentu " + ex);
-            }
-            catch (FormatException ex)
-            {
-                return null;
-                //MessageBox.Show("Błąd formatu: " + ex);
-            }
-            catch (OverflowException ex)
-            {
-                return null;
-                //MessageBox.Show("Błąd przepełnienia " + ex);
+                string query = Baza.CreateSelectQuery(ts, count, true);
+
+                List<string>[] result = new List<string>[4];
+                result = Baza.Select(query);
+
+
+                try
+                {
+                    DateTime lol = DateTime.Parse(result[0][0]);
+                    resp = new MyResponse();
+                    resp.Temperature = Convert.ToSingle((result[1][0]));
+                    resp.Pressure = Convert.ToSingle(result[2][0]);
+                    resp.Humidity = Convert.ToSingle(result[3][0]);
+                    resp.Time = (Int32)(lol.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+
+                    return resp;
+                }
+                catch (ArgumentNullException ex)
+                {
+                    return null;
+                    //MessageBox.Show("Brak argumentu " + ex);
+                }
+                catch (FormatException ex)
+                {
+                    return null;
+                    //MessageBox.Show("Błąd formatu: " + ex);
+                }
+                catch (OverflowException ex)
+                {
+                    return null;
+                    //MessageBox.Show("Błąd przepełnienia " + ex);
+                }
             }
         }
         private void OnMessageReceived(object sender, TypedRequestReceivedEventArgs<MyRequest> e)

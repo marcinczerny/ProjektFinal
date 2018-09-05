@@ -61,6 +61,11 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.pictureDatabase = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.ledLight5 = new ProjektFinal.LedLight();
+            this.ledLight3 = new ProjektFinal.LedLight();
+            this.ledLight4 = new ProjektFinal.LedLight();
+            this.ledLight2 = new ProjektFinal.LedLight();
+            this.ledLight1 = new ProjektFinal.LedLight();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -71,6 +76,7 @@
             this.pictureSerial = new System.Windows.Forms.PictureBox();
             this.pictureBT = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblRefreshSerial = new System.Windows.Forms.Button();
             this.panelClosedSerial = new System.Windows.Forms.Panel();
             this.panelOpenedSerial = new System.Windows.Forms.Panel();
             this.btnDisconnectSerial = new System.Windows.Forms.Button();
@@ -90,11 +96,7 @@
             this.backgroundSerial = new System.ComponentModel.BackgroundWorker();
             this.timerDatabase = new System.Windows.Forms.Timer(this.components);
             this.backgroundSQLSender = new System.ComponentModel.BackgroundWorker();
-            this.ledLight1 = new ProjektFinal.LedLight();
-            this.ledLight2 = new ProjektFinal.LedLight();
-            this.ledLight3 = new ProjektFinal.LedLight();
-            this.ledLight4 = new ProjektFinal.LedLight();
-            this.ledLight5 = new ProjektFinal.LedLight();
+            this.timerServer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.tabKontrola.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -395,6 +397,41 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Mikrokontroler";
             // 
+            // ledLight5
+            // 
+            this.ledLight5.Location = new System.Drawing.Point(285, 524);
+            this.ledLight5.Name = "ledLight5";
+            this.ledLight5.Size = new System.Drawing.Size(69, 70);
+            this.ledLight5.TabIndex = 23;
+            // 
+            // ledLight3
+            // 
+            this.ledLight3.Location = new System.Drawing.Point(147, 524);
+            this.ledLight3.Name = "ledLight3";
+            this.ledLight3.Size = new System.Drawing.Size(69, 70);
+            this.ledLight3.TabIndex = 22;
+            // 
+            // ledLight4
+            // 
+            this.ledLight4.Location = new System.Drawing.Point(219, 524);
+            this.ledLight4.Name = "ledLight4";
+            this.ledLight4.Size = new System.Drawing.Size(69, 70);
+            this.ledLight4.TabIndex = 21;
+            // 
+            // ledLight2
+            // 
+            this.ledLight2.Location = new System.Drawing.Point(81, 524);
+            this.ledLight2.Name = "ledLight2";
+            this.ledLight2.Size = new System.Drawing.Size(69, 70);
+            this.ledLight2.TabIndex = 20;
+            // 
+            // ledLight1
+            // 
+            this.ledLight1.Location = new System.Drawing.Point(6, 524);
+            this.ledLight1.Name = "ledLight1";
+            this.ledLight1.Size = new System.Drawing.Size(69, 70);
+            this.ledLight1.TabIndex = 19;
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -514,6 +551,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lblRefreshSerial);
             this.groupBox1.Controls.Add(this.panelClosedSerial);
             this.groupBox1.Controls.Add(this.panelOpenedSerial);
             this.groupBox1.Controls.Add(this.btnDisconnectSerial);
@@ -528,6 +566,16 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Połączenie z mikrokontrolerem";
+            // 
+            // lblRefreshSerial
+            // 
+            this.lblRefreshSerial.Location = new System.Drawing.Point(197, 33);
+            this.lblRefreshSerial.Name = "lblRefreshSerial";
+            this.lblRefreshSerial.Size = new System.Drawing.Size(75, 23);
+            this.lblRefreshSerial.TabIndex = 8;
+            this.lblRefreshSerial.Text = "Odśwież";
+            this.lblRefreshSerial.UseVisualStyleBackColor = true;
+            this.lblRefreshSerial.Click += new System.EventHandler(this.lblRefreshSerial_Click);
             // 
             // panelClosedSerial
             // 
@@ -722,40 +770,11 @@
             this.backgroundSQLSender.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundSQLSender_DoWork);
             this.backgroundSQLSender.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundSQLSender_RunWorkerCompleted);
             // 
-            // ledLight1
+            // timerServer
             // 
-            this.ledLight1.Location = new System.Drawing.Point(6, 524);
-            this.ledLight1.Name = "ledLight1";
-            this.ledLight1.Size = new System.Drawing.Size(69, 70);
-            this.ledLight1.TabIndex = 19;
-            // 
-            // ledLight2
-            // 
-            this.ledLight2.Location = new System.Drawing.Point(81, 524);
-            this.ledLight2.Name = "ledLight2";
-            this.ledLight2.Size = new System.Drawing.Size(69, 70);
-            this.ledLight2.TabIndex = 20;
-            // 
-            // ledLight3
-            // 
-            this.ledLight3.Location = new System.Drawing.Point(147, 524);
-            this.ledLight3.Name = "ledLight3";
-            this.ledLight3.Size = new System.Drawing.Size(69, 70);
-            this.ledLight3.TabIndex = 22;
-            // 
-            // ledLight4
-            // 
-            this.ledLight4.Location = new System.Drawing.Point(219, 524);
-            this.ledLight4.Name = "ledLight4";
-            this.ledLight4.Size = new System.Drawing.Size(69, 70);
-            this.ledLight4.TabIndex = 21;
-            // 
-            // ledLight5
-            // 
-            this.ledLight5.Location = new System.Drawing.Point(285, 524);
-            this.ledLight5.Name = "ledLight5";
-            this.ledLight5.Size = new System.Drawing.Size(69, 70);
-            this.ledLight5.TabIndex = 23;
+            this.timerServer.Enabled = true;
+            this.timerServer.Interval = 1000000;
+            this.timerServer.Tick += new System.EventHandler(this.timerServer_Tick);
             // 
             // Form1
             // 
@@ -861,6 +880,8 @@
         private LedLight ledLight4;
         private LedLight ledLight2;
         private LedLight ledLight1;
+        private System.Windows.Forms.Button lblRefreshSerial;
+        private System.Windows.Forms.Timer timerServer;
     }
 }
 

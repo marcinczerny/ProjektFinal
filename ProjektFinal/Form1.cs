@@ -14,6 +14,7 @@ using Eneter.Messaging.MessagingSystems.MessagingSystemBase;
 
 namespace ProjektFinal
 {
+    
     public struct SaverToDB
     {
         public bool saveCompletedWithoutError;
@@ -28,16 +29,19 @@ namespace ProjektFinal
 
         object serialMutex;
         object dbCollectionMutex;
+        
 
         List<string> sqlToSaveCollection;
         timespan[] timespans = { timespan.day, timespan.hour, timespan.minute, timespan.sample };
 
         bool appValidated;
+        bool serialValidated;
         SaverToDB saverTo;
 
         WinFormServiceApplication.Server server;
 
         List<PhoneClient> phoneClients;
+        
         public Form1()
         {
             InitializeComponent();
@@ -53,6 +57,7 @@ namespace ProjektFinal
             panelClosedSerial.BackColor = Color.Red;
 
             serialMutex = new object();
+            
 
             foreach (timespan tspan in timespans)
             {
@@ -352,7 +357,10 @@ namespace ProjektFinal
                         pres = serial.pressure;
                         hum = serial.humidity;
                         query = baza.CreateInsertQuery(DateTime.Now,temp, pres, hum);
-
+                        lock (server.sampleMutex)
+                        {
+                            server.dataReceiveds.Add(new WinFormServiceApplication.DataReceived { timestamp = DateTime.Now, pressure = pres, humidity = hum, temperature = temp});
+                        }
                         lock (dbCollectionMutex)
                         {
                             sqlToSaveCollection.Add(query);
@@ -464,6 +472,15 @@ namespace ProjektFinal
 
         private void backgroundValidate_DoWork(object sender, DoWorkEventArgs e)
         {
+            var serialNames = Serial.GetShortPortNames();
+            serialValidated = false;
+            foreach(var t in serialNames)
+            {
+                if (String.Equals(t.ToString(), Properties.Settings.Default.stringPortName.Substring(0, Properties.Settings.Default.stringPortName.IndexOf(' '))));
+                {
+                    serialValidated = true;
+                }
+            }
             if(baza.ValidateDB() == true)
             {
                 appValidated = true;
@@ -476,6 +493,17 @@ namespace ProjektFinal
 
         private void backgroundValidate_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if(serialValidated == true)
+            {
+                lblPortName.ForeColor = SystemColors.ControlText;
+                btnConnectSerial.Enabled = true;
+            }
+            else
+            {
+                lblPortName.ForeColor = Color.DarkRed;
+                btnConnectSerial.Enabled = false;
+            }
+
             if (appValidated == true)
             {
                 pictureDatabase.BackColor = Color.Green;
@@ -579,6 +607,22 @@ namespace ProjektFinal
             foreach(PhoneClient phone in phoneClients)
             {
                 phone.Disconnect();
+            }
+        }
+
+        private void lblRefreshSerial_Click(object sender, EventArgs e)
+        {
+            ValidateApp();
+        }
+
+        private void timerServer_Tick(object sender, EventArgs e)
+        {
+            lock (server.sampleMutex)
+            {
+                if(server.dataReceiveds.Count > 50)
+                {
+                    server.dataReceiveds.RemoveRange(0, server.dataReceiveds.Count - 50);
+                }
             }
         }
     }
